@@ -1,0 +1,30 @@
+{
+  "name": "covid19",
+  "version": "1.0.0",
+  "description": "COVID-19 Update FrontEnd Application",
+  "main": "server.js",
+  "repository": "https://github.com/sutanlab/covid19.git",
+  "author": "Sutan Gading <sutan.gnst@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "next",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "^9.3.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  },
+  "devDependencies": {
+    "@types/next": "^9.0.0",
+    "@types/node": "^13.9.0",
+    "@types/react": "^16.9.23",
+    "@zeit/next-sass": "^1.0.1",
+    "@zeit/next-typescript": "^1.1.1",
+    "babel-plugin-root-import": "^6.4.1",
+    "node-sass": "^4.13.1",
+    "styled-jsx-plugin-sass": "^1.0.0",
+    "typescript": "^3.8.3"
+  }
+}

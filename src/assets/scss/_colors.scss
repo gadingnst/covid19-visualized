@@ -1,0 +1,23 @@
+.color {
+    @each $name, $color in $colors {
+        &.is-bg-#{$name} {
+            background-color: $color;
+        }
+
+        &.is-txt-#{$name} {
+            color: $color;
+        }
+    }
+
+    @each $name, $theme in $text-theme {
+        &.is-theme-txt-#{$name} {
+            color: $theme;
+        }
+    }
+
+    @each $name, $theme in $app-theme {
+        &.is-theme-#{$name} {
+            background-color: $theme;
+        }
+    }
+}
