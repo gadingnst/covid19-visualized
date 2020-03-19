@@ -24,7 +24,7 @@ export default (() => {
                 return region.toLowerCase().includes(keyword)
                     || (province ? province.toLowerCase().includes(keyword) : false)
             })
-            setData(filterByKeywords.sort(sortAZ).slice(0, 6))
+            setData(filterByKeywords.sort(sortAZ).slice(0, 12))
         } else {
             setData([])
         }
