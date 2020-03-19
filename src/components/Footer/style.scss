@@ -1,0 +1,23 @@
+@import '~assets/styles/variables';
+
+body {
+    footer {
+        background-color: #ededed;
+        text-align: right;
+        a {
+            color: map-get($colors, 'info')
+        }
+        #bullshit {
+            text-decoration: dotted underline;
+        }
+    }
+
+    &.dark {
+        footer {
+            background-color: lighten(map-get($colors, 'default'), 2%);
+            a {
+                color: lighten(map-get($colors, 'danger'), 10%)
+            }
+        }
+    }
+}

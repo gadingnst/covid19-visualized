@@ -1,0 +1,16 @@
+@import '~assets/styles/variables';
+
+.header {
+    display: block;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: $header-height;
+    z-index: 2;
+}
+
+body.dark {
+    .header {
+        background-color: darken(map-get($colors, 'info'), 30%)
+    }
+}

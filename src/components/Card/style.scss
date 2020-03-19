@@ -1,0 +1,33 @@
+@import '~assets/styles/variables';
+
+body {
+    .card {
+        border-radius: 5px;
+        box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0 ,.07);
+        align-self: center;
+        transition-property: background-color, transform !important;
+    
+        .card-header {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-bottom: .8px solid #ebebeb;
+        }
+
+        .card-body {
+            padding-top: 8px;
+            padding-bottom: 8px
+        }
+    
+        &:not(.world-visualization-container):hover {
+            transform: translateY(-2px)
+        }
+    }
+
+    &.dark .card {
+        &:not(.color) {
+            background-color: lighten(map-get($app-theme, 'dark'), 5%);
+            box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, .02),
+                1px 1px 15px 0 rgba(0, 0, 0, .03);
+        }
+    }
+}
