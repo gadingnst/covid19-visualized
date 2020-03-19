@@ -6,8 +6,16 @@ import { Daily } from 'typings/api'
 export default (() => {
     const [daily, setDaily] = useState<Daily[]>([])
     const { data } = useFetch<Daily[]>(`${API_BASEURL}/daily`)
-    const counter = useCounter(data, 6)
+    const { counter, eventScroll } = useCounter(data, 6)
+
     const newest = ({ reportDate: prev }, { reportDate: next }) => next - prev
+
+    useEffect(() => {
+        data && window.addEventListener('scroll', eventScroll)
+        return () => {
+            window.removeEventListener('scroll', eventScroll)
+        }
+    }, [data])
 
     useEffect(() => {
         counter > 0 && setDaily(data

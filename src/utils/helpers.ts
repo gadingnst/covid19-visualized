@@ -30,3 +30,11 @@ export const dateFormat = (dateTz: string | number, withTime: boolean = false): 
 
     return new Date(dateTz).toLocaleString('en-ID', options)
 }
+
+export const onScrollBottom = (callback: () => void) => (): void => {
+    const scrollHeight = window.innerHeight + window.scrollY
+    const footerHeight = document.querySelector('footer').scrollHeight
+    const pageHeight = document.body.scrollHeight - footerHeight
+    
+    if (pageHeight < scrollHeight) callback()
+}

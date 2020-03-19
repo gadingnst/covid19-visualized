@@ -2,19 +2,55 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { Search, Button, Card, Chart, FlexList } from 'components'
-import { useFetch, getInCare, getPercentage, dateFormat, API_BASEURL } from 'utils'
+import { Search, Button, Detail, FlexList } from 'components'
+import { useFetch, API_BASEURL, useCounter } from 'utils'
 import { Country } from 'typings/api'
 
 export default (() => {
+    const sortAZ = ({ countryRegion: prev }, { countryRegion: next }) => (next > prev) ? -1 : 1
+    
+    const countries = useFetch<Country[]>(
+        `${API_BASEURL}/confirmed`,
+        {},
+        data => data.sort(sortAZ)
+    )
+
     const [keyword, setKeyword] = useState<string>('')
     const [data, setData] = useState<Country[]>([])
-    const countries = useFetch<Country[]>(`${API_BASEURL}/confirmed`)
-    const sortAZ = ({ countryRegion: prev }, { countryRegion: next }) => (next > prev) ? -1 : 1
+    const [filteredCountries, setFilteredCountries] = useState<Country[]>([])
+    const dataCount = useCounter(countries.data, 6)
+    const filterCount = useCounter(filteredCountries, 6)
 
     const onSearch = (value: string): void => {
         setKeyword(value.toLowerCase())
     }
+
+    const onShowMore = () => filteredCountries.length
+        ? filterCount.increase()
+        : dataCount.increase()
+
+    useEffect(() => {
+        dataCount.counter > 0 && setData(
+            countries.data.slice(0, dataCount.counter)
+        )
+    }, [dataCount.counter])
+
+    useEffect(() => {
+        filterCount.counter > 0 && setData(
+            filteredCountries.slice(0, filterCount.counter)
+        )
+    }, [filterCount.counter])
+
+    useEffect(() => {
+        if (keyword.length) {
+            dataCount.counter > 6 && dataCount.reset(6)
+            setData(filteredCountries.slice(0, filterCount.counter))
+        } else {
+            countries.data && setData(
+                countries.data.slice(0, dataCount.counter)
+            )
+        }
+    }, [filteredCountries])
 
     useEffect(() => {
         if (keyword.length) {
@@ -24,11 +60,31 @@ export default (() => {
                 return region.toLowerCase().includes(keyword)
                     || (province ? province.toLowerCase().includes(keyword) : false)
             })
-            setData(filterByKeywords.sort(sortAZ).slice(0, 12))
+            setFilteredCountries(filterByKeywords)
         } else {
-            setData([])
+            setFilteredCountries([])
         }
     }, [keyword])
+
+    const renderShowMore = () => {
+        if (countries.data) {
+            const maxFilterData = filteredCountries.length && data.length === filteredCountries.length
+            const maxData = data.length === countries.data.length
+            const match = data.length + filteredCountries.length > 0
+
+            if (!(maxFilterData || maxData) && match) {
+                return (
+                    <Button
+                        block
+                        text="Show more..."
+                        color="primary"
+                        onClick={onShowMore}
+                    />
+                )
+            }
+        }
+        return null
+    }
 
     return (
         <>
@@ -51,63 +107,27 @@ export default (() => {
 
             <Search
                 block
+                disabled={countries.loading}
                 className="p-12"
-                placeholder="Search country state or province..."
+                placeholder={countries.loading ? 'Loading...' : 'Search country state or province... (eg: indonesia)'}
                 onChange={onSearch}
             />
 
+            {countries.loading && <h2 className="text-center my-8">Loading...</h2>}
+
             {data.length ? (
                 <FlexList<Country> data={data} wrapperClass="my-12" itemClass="my-12">
-                    {country => (
-                        <Card
-                            footer={
-                                <p className="font is-size-small text-center mt-12">
-                                    Last updated at: {dateFormat(country.lastUpdate, true)}
-                                </p>
-                            }
-                            header={
-                                <h2 className="text-center">{
-                                    country.provinceState
-                                        ? `${country.provinceState}, ${country.countryRegion}`
-                                        : country.countryRegion
-                                }</h2>
-                            }
-                        >
-                            <div className="country-content">
-                                <Chart
-                                    confirmed={country.confirmed}
-                                    recovered={country.recovered}
-                                    deaths={country.deaths}
-                                />
-                                <div className="country-details text-center">
-                                    <p>Total Confirmed: <span className="color is-txt-warning">{country.confirmed}</span></p>
-                                    <p>In Care: <span className="color is-txt-info">{getInCare(country)} ({getPercentage(getInCare(country), country.confirmed)})</span></p>
-                                    <p>Recovered: <span className="color is-txt-success">{country.recovered} ({getPercentage(country.recovered, country.confirmed)})</span></p>
-                                    <p>Deaths: <span className="color is-txt-danger">{country.deaths} ({getPercentage(country.deaths, country.confirmed)})</span></p>
-                                </div>
-                            </div>
-                        </Card>
-                    )}
+                    {country => <Detail country={country} />}
                 </FlexList>
             ) : (
                 <h3 className="text-center my-24">{
                     keyword.length
-                        ? `No matching country "${keyword}" found.`
-                        : 'Please type the name of the country that you want to search. (eg: indonesia)'
+                        ? `No matching country or province "${keyword}" found.`
+                        : 'Please type the name of the country that you want to search.'
                 }</h3>
             )}
-            <style jsx>{`
-                .country-details {
-                    width: 100%;
-                }
 
-                .country-content {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-direction: column;
-                }    
-            `}</style>
+            {renderShowMore()}
         </>
     )
 }) as NextPage

@@ -7,6 +7,11 @@ input[type='text'] {
     border-radius: 8px;
     border: solid 1.5px map-get($colors, 'info');
 
+    &:disabled {
+        background-color: rgba(0, 0, 0, .25) !important;
+        border: none !important;
+    }
+
     &.block {
         width: 100%;
     }
