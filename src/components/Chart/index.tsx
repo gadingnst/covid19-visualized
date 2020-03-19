@@ -4,7 +4,7 @@ import { getInCare } from 'utils'
 
 const Chart = Dynamic(() => import('react-apexcharts'), {
     ssr: false,
-    loading: () => <h2>Loading Chart...</h2>
+    loading: () => <h3 className="py-12">Loading Chart...</h3>
 })
 
 interface PropTypes {

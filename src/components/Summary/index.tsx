@@ -24,7 +24,7 @@ export default (() => {
 
             <div id="summary" className="font is-weight-bold my-24">
                 <div className="summary-data text-shadow text-center color is-theme-txt-dark">
-                    {loading ? <h2>Loading Summary...</h2> : (
+                    {loading ? <h3>Loading Summary...</h3> : (
                         Object.entries(summary).map(([key, value], idx) => (
                             <div key={idx} className="summary-item p-8">
                                 <Card
