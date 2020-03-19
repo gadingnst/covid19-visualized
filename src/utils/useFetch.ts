@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-
 interface DataCallback<TData> {
     (data: TData): TData
 }
