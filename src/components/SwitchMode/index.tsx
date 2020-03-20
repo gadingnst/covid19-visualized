@@ -18,7 +18,8 @@ const SwitchMode: FunctionComponent<PropTypes> = ({ size }) => {
     })
 
     return (
-        <span className="p-2" style={{ cursor: 'pointer' }} onClick={() => switchDark(!isDark)}>
+        <div className="p-2" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => switchDark(!isDark)}>
+            <span>{isDark ? 'Light' : 'Dark'}&nbsp;</span>
             <svg
                 width={size}
                 height={size}
@@ -48,7 +49,7 @@ const SwitchMode: FunctionComponent<PropTypes> = ({ size }) => {
                     )
                 }
             </svg>
-        </span>
+        </div>
     )
 }
 
