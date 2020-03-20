@@ -7,7 +7,7 @@ import { IDCases } from 'typings/api'
 import { useFetch, useCounter, dateFormat, metaGenerator } from 'utils'
 
 const meta = metaGenerator({
-    title: 'Indonesia Cases | COVID-19 Visualized',
+    title: 'Indonesia Cases | COVID-19 Visualized (By: Sutan Nasution.)',
     description: 'COVID-19 data update for indonesia cases',
     keywords: 'covid19, corona virus, website, china, covid19 world, covid-19, corona, indonesia, kasus indonesia'
 })
@@ -57,7 +57,7 @@ export default (() => {
                                     header={<h5 className="text-center">(#{data.no}) {data.kota ? `${data.kota}, ${data.provinsi}` : data.provinsi}</h5>}
                                     footer={
                                         <span className="font is-size-small">
-                                            {data.keterangan || 'Tidak ada keterangan.'} {data.dirawatdi ? `(Sedang dirawat di ${data.dirawatdi}); ` : ''}{data.kondisiKesehatan ? `Kodisi: ${data.kondisiKesehatan}` : ''}
+                                            {data.keterangan || 'Tidak ada keterangan'}; {data.dirawatdi ? `(Sedang dirawat di ${data.dirawatdi}); ` : ''}{data.kondisiKesehatan ? `Kodisi: ${data.kondisiKesehatan}` : ''}
                                         </span>
                                     }
                                 >
