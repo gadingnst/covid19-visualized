@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'react'
+import Link from 'next/link'
 import SwitchMode from 'components/SwitchMode'
 import './style.scss'
 
@@ -11,7 +12,13 @@ export default (props => {
     return (
         <nav className={`header ${props.className || ''}`.trimRight()}>
             <div className="nav-layout">
-                <h3>{props.title}</h3>
+                <h3>
+                    <Link href="/">                
+                        <span style={{ cursor: 'pointer' }}>
+                            {props.title}
+                        </span>
+                    </Link>
+                </h3>
                 <SwitchMode />
             </div>
             
