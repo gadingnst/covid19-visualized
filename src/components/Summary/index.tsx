@@ -28,7 +28,7 @@ export default (() => {
                         Object.entries(summary).map(([key, value], idx) => (
                             <div key={idx} className="summary-item p-8">
                                 <Card
-                                    header={<h4>{key.toUpperCase()}</h4>}
+                                    header={<h4>TOTAL {key.toUpperCase()}</h4>}
                                     className={`color is-bg-${
                                         key === 'confirmed'
                                             ? 'warning'
@@ -37,7 +37,7 @@ export default (() => {
                                                 : 'danger'}
                                     `}
                                 >
-                                    {`${value} (${key === 'confirmed' ? 'infected' : getPercentage(value, data.confirmed.value)})`}
+                                    {`${value} (${key === 'confirmed' ? 'Positive infected' : getPercentage(value, data.confirmed.value)})`}
                                 </Card>
                             </div>
                         ))
