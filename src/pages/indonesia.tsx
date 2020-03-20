@@ -62,7 +62,7 @@ export default (() => {
                                     }
                                 >
                                     <div className="cases">
-                                        <p>Usia: <span className="font is-weight-bold">{data.usia || 'Tidak diketahui'}</span></p>
+                                        <p>Usia: <span className="font is-weight-bold">{data.usia ? `${data.usia} tahun` : 'Tidak diketahui'}</span></p>
                                         <p>Jenis Kelamin: <span className="font is-weight-bold">{data.jk === 'P'
                                             ? 'Wanita'
                                             : data.jk === 'L'
