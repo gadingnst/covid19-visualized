@@ -35,10 +35,10 @@ export default (({ country }) => {
                     />
                 )}
                 <div className="country-details text-center my-8">
-                    <p>Total Confirmed: <span className="color is-txt-warning">{country.confirmed}</span></p>
-                    <p>In Care: <span className="color is-txt-info">{getInCare(country)} ({getPercentage(getInCare(country), country.confirmed)})</span></p>
-                    <p>Recovered: <span className="color is-txt-success">{country.recovered} ({getPercentage(country.recovered, country.confirmed)})</span></p>
-                    <p>Deaths: <span className="color is-txt-danger">{country.deaths} ({getPercentage(country.deaths, country.confirmed)})</span></p>
+                    <p>Total Confirmed: <span className="font is-weight-bold color is-txt-warning">{country.confirmed}</span></p>
+                    <p>In Care: <span className="font is-weight-bold color is-txt-info">{getInCare(country)} ({getPercentage(getInCare(country), country.confirmed)})</span></p>
+                    <p>Recovered: <span className="font is-weight-bold color is-txt-success">{country.recovered} ({getPercentage(country.recovered, country.confirmed)})</span></p>
+                    <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{country.deaths} ({getPercentage(country.deaths, country.confirmed)})</span></p>
                 </div>
                 <Button
                     block

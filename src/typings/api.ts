@@ -3,6 +3,29 @@ type SummaryObjectType = {
     detail: string
 }
 
+export interface IDCases {
+    no: number
+    usia: number | null
+    jk: string | null
+    wn: string | null
+    provinsi: string | null
+    kota: string | null
+    jeniskasus: string | null
+    kluster: string | null
+    sumberKontak: string | null
+    kontakdgnpasienCOVID19: Date | null
+    mulaiGejala: Date | null
+    mulaiDiisolasi: Date | null
+    positif: Date | null
+    dirawatdi: string | null
+    kondisiKesehatan: string | null
+    keterangan: string | null
+    referensi: string | null
+    lamaInkubasi: number | null
+    status: string | null
+    fid: number | null
+}
+
 export interface Country {
     provinceState: string | null
     countryRegion: string | null

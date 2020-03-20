@@ -19,6 +19,7 @@ export default <Data extends object>(props: PropTypes<Data>) => (
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-around;
+                align-items: stretch;
                 flex-direction: row;
 
                 .flex-item {

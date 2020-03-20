@@ -89,7 +89,7 @@ export default (() => {
     return (
         <>
             <Head>
-                <title>Details | COVID-19 Visualized</title>
+                <title>Details | COVID-19 Visualized (By: Sutan Nasution.)</title>
             </Head>
 
             <div className="text-center my-12">
@@ -101,7 +101,7 @@ export default (() => {
             
             <div className="btn-link mb-24">
                 <Link href="/">
-                    <Button block color="primary" text="Back to home" />
+                    <Button block color="primary" text="< Back to home" />
                 </Link>
             </div>
 

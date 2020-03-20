@@ -43,14 +43,14 @@ export default (() => {
                         header={<h5 className="text-center">{dateFormat(daily.reportDateString)}</h5>}
                         footer={
                             <div className="total">
-                                <p>Total Confirmed: <span className="color is-txt-danger">{daily.totalConfirmed || 0}</span></p>
-                                <p>Total Recovered: <span className="color is-txt-success">{daily.totalRecovered || 0} ({getPercentage(daily.totalRecovered, daily.totalConfirmed)})</span></p>
+                                <p>Total Confirmed: <span className="font is-weight-bold color is-txt-danger">{daily.totalConfirmed || 0}</span></p>
+                                <p>Total Recovered: <span className="font is-weight-bold color is-txt-success">{daily.totalRecovered || 0} ({getPercentage(daily.totalRecovered, daily.totalConfirmed)})</span></p>
                             </div>
                         }
                     >
                         <div className="daily-infected">
-                            <p>Confirmed: <span className={`color is-txt-${daily.recovered >= 0 ? 'danger' : 'info'}`}>{daily.confirmed}</span></p>
-                            <p>Recovered: <span className="color is-txt-success">{daily.recovered}</span></p>
+                            <p>Confirmed: <span className={`font is-weight-bold color is-txt-${daily.recovered >= 0 ? 'danger' : 'info'}`}>{daily.confirmed}</span></p>
+                            <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered}</span></p>
                         </div>
                     </Card>
                 )}

@@ -58,6 +58,10 @@ export default (() => {
                 <Link href="/details">
                     <Button block color="primary" text="Go to details page" />
                 </Link>
+
+                <Link href="/indonesia">
+                    <Button className="mt-8" block color="info" text="Go to Indonesia cases" />
+                </Link>
             </div>
             
             <style jsx>{`

@@ -8,6 +8,7 @@
 - [x] Summary count and visualization
 - [x] Details count for every country
 - [x] Chart
+- [x] Indonesia cases update
 
 ### Related repository
 - [covid-19-api for the API (made by mathdroid)](https://github.com/mathdroid/covid-19-api)

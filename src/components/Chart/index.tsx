@@ -11,6 +11,7 @@ interface PropTypes {
     confirmed: number
     recovered: number
     deaths: number
+    showLegend?: boolean
 }
 
 export default (props => (
@@ -29,7 +30,7 @@ export default (props => (
                 ]
             },
             legend: {
-                show: false
+                show: props.showLegend || false
             },
             responsive: [{
                 breakpoint: 820,
