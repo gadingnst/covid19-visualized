@@ -57,7 +57,7 @@ export default (() => {
                                     header={<h5 className="text-center">(#{data.no}) {data.kota ? `${data.kota}, ${data.provinsi}` : data.provinsi}</h5>}
                                     footer={
                                         <span className="font is-size-small">
-                                            {data.keterangan || 'Tidak ada keterangan'}; {data.dirawatdi ? `(Sedang dirawat di ${data.dirawatdi}); ` : ''}{data.kondisiKesehatan ? `Kodisi: ${data.kondisiKesehatan}` : ''}
+                                            {data.keterangan || 'Tidak ada keterangan'}; {data.dirawatdi ? `(Sedang dirawat di ${data.dirawatdi}); ` : ''}{data.kondisiKesehatan ? `Kodisi: ${data.kondisiKesehatan};` : ''}
                                         </span>
                                     }
                                 >
