@@ -1,7 +1,7 @@
 import * as D3 from 'd3'
 import * as TopoJSON from 'topojson-client'
 import Color from 'color'
-import { getPercentage, getInCare } from 'utils'
+import { getPercentage, getActiveCase } from 'utils'
 import { Country } from 'typings/api'
 
 interface Legend {
@@ -23,7 +23,7 @@ const tooltipHtml = (data: Country): string => `
     <div id="covid19-tooltip">
         <h3 class="text-center my-2">${data.name}</h3>
         <h5>Confirmed: ${data.confirmed}</h5>
-        <h5>In Care: ${getInCare(data)} (${getPercentage(getInCare(data), data.confirmed)})</h5>
+        <h5>Active: ${getActiveCase(data)} (${getPercentage(getActiveCase(data), data.confirmed)})</h5>
         <h5>Recovered: ${data.recovered} (${getPercentage(data.recovered, data.confirmed)})</h5>
         <h5>Deaths: ${data.deaths} (${getPercentage(data.deaths, data.confirmed)})</h5>
     </div>

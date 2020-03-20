@@ -2,7 +2,7 @@ export const getPercentage = (amount: number, total: number): string => (
     ((amount * 100) / (total || 1)).toFixed(2) + '%'
 )
 
-export const getInCare = (data: any): number => (
+export const getActiveCase = (data: any): number => (
     data.confirmed - (data.recovered + data.deaths)
 )
 

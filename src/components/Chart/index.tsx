@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import Dynamic from 'next/dynamic'
-import { getInCare } from 'utils'
+import { getActiveCase } from 'utils'
 
 const Chart = Dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -18,10 +18,10 @@ export default (props => (
     <Chart
         type="pie"
         width="350px"
-        series={[getInCare(props), props.recovered, props.deaths]}
+        series={[getActiveCase(props), props.recovered, props.deaths]}
         options={{
-            colors: ['#0292ff', '#0dc25c', '#fe2b5e'],
-            labels: ['In Care', 'Recovered', 'Deaths'],
+            colors: ['#fec60d', '#0dc25c', '#fe2b5e'],
+            labels: ['Active', 'Recovered', 'Deaths'],
             dataLabels: {
                 enabled: true,
                 formatter: (percent: number, opts) => [

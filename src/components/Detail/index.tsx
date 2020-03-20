@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react'
 import { Card, Chart, Button } from 'components'
-import { dateFormat, getInCare, getPercentage } from 'utils'
+import { dateFormat, getActiveCase, getPercentage } from 'utils'
 import { Country } from 'typings/api'
 import './style.scss'
 
@@ -36,7 +36,7 @@ export default (({ country }) => {
                 )}
                 <div className="country-details text-center my-8">
                     <p>Total Confirmed: <span className="font is-weight-bold color is-txt-warning">{country.confirmed}</span></p>
-                    <p>In Care: <span className="font is-weight-bold color is-txt-info">{getInCare(country)} ({getPercentage(getInCare(country), country.confirmed)})</span></p>
+                    <p>Active: <span className="font is-weight-bold color is-txt-warning">{getActiveCase(country)} ({getPercentage(getActiveCase(country), country.confirmed)})</span></p>
                     <p>Recovered: <span className="font is-weight-bold color is-txt-success">{country.recovered} ({getPercentage(country.recovered, country.confirmed)})</span></p>
                     <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{country.deaths} ({getPercentage(country.deaths, country.confirmed)})</span></p>
                 </div>
