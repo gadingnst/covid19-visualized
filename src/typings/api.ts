@@ -3,7 +3,7 @@ type SummaryObjectType = {
     detail: string
 }
 
-export interface IDCases {
+export interface IDCasesData {
     no: number
     usia: number | null
     jk: string | null
@@ -60,4 +60,9 @@ export interface Summary {
     recovered: SummaryObjectType
     deaths: SummaryObjectType
     lastUpdate: string
+}
+
+export interface IDCases {
+    warning: string
+    data: IDCasesData[]
 }
