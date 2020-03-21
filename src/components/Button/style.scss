@@ -1,0 +1,49 @@
+@import '~assets/styles/variables';
+
+button {
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    color: map-get($text-theme, 'dark');
+    transition: background-color .5s ease-in-out;
+
+    span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        
+        &:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: all .5s;
+        }
+    }
+
+    &.block {
+        width: 100%;
+    }
+    
+    &:active {
+        transform: translateY(1px);
+    }
+
+    &:hover {
+        @each $name, $color in $colors {
+            &.color.is-bg-#{$name} {
+                background-color: darken($color, 10%);
+            }
+        }
+
+        span {
+            &:after {
+                opacity: 1;
+                right: -12px;
+            }
+        }
+    }
+}

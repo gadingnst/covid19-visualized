@@ -1,0 +1,37 @@
+@import '~assets/styles/variables';
+
+input[type='text'] {
+    display: inline-block;
+    background-color: transparent;
+    transition: all .2s ease-in-out;
+    border-radius: 8px;
+    border: solid 1.5px map-get($colors, 'info');
+
+    &:disabled {
+        background-color: rgba(0, 0, 0, .25) !important;
+        border: none !important;
+    }
+
+    &.block {
+        width: 100%;
+    }
+
+    &:focus {
+        box-shadow: 0 7.5px 17.5px rgba(50, 50, 93, .1), 0 2.5px 7.5px rgba(0, 0, 0 ,.07);
+    }
+
+    &, &::placeholder {
+        font-weight: 600;
+    }
+}
+
+body.dark {
+    input[type='text'] {
+        color: map-get($text-theme, 'dark');
+        border: solid 1.5px lighten(map-get($app-theme, 'dark'), 15%);
+
+        &::placeholder {
+            color: map-get($text-theme, 'dark');
+        }
+    }
+}
