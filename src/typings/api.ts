@@ -3,7 +3,45 @@ type SummaryObjectType = {
     detail: string
 }
 
-export interface IDCasesData {
+export interface IDFormat<TData = any> {
+    data: TData
+    warning?: string
+}
+
+export interface IDSummary {
+    meninggal: number
+    sembuh: number
+    perawatan: number
+    jumlahKasus: number
+}
+
+export interface IDDaily {
+    harike: number
+    tanggal: number
+    jumlahKasusBaruperHari: number | null
+    jumlahKasusKumulatif: number | null
+    jumlahpasiendalamperawatan: number | null
+    persentasePasiendalamPerawatan: number | null
+    jumlahPasienSembuh: number | null
+    persentasePasienSembuh: number | null
+    jumlahPasienMeninggal: number | null
+    persentasePasienMeninggal: number | null
+    fid: number
+    jumlahPasienSembuhPerHari?: number
+    jumlahPasienMeninggalPerHari?: number
+}
+
+export interface IDProvince {
+    kodeProvinsi: number
+    provinsi: string
+    kasusTerkonfirmasiAkumulatif: number
+    kasusSembuhAkumulatif: number
+    kasusMeninggalAkumulatif: number
+    pembaruan: string
+    fid: number
+}
+
+export interface IDCases {
     no: number
     usia: number | null
     jk: string | null
@@ -60,9 +98,4 @@ export interface Summary {
     recovered: SummaryObjectType
     deaths: SummaryObjectType
     lastUpdate: string
-}
-
-export interface IDCases {
-    warning: string
-    data: IDCasesData[]
 }

@@ -44,7 +44,7 @@ export default (id: string, data: Country[]): Promise<any> => {
             .translate([450, 300])
     )
 
-    return Promise.all([D3.json('/world-110m.json'), D3.csv('/world-country.csv')])
+    return Promise.all([D3.json('/dataset/world-110m.json'), D3.csv('/dataset/world-country.csv')])
         .then(([world, countries]) => {
             const worldFeatures: Country[] | any[] = ((TopoJSON.feature(world, world.objects.countries) as any)
                 .features as any[])

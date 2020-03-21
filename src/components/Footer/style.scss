@@ -2,7 +2,7 @@
 
 body {
     footer {
-        background-color: #ededed;
+        background-color: darken(#fff, 10%);
         text-align: right;
         a {
             color: map-get($colors, 'info')

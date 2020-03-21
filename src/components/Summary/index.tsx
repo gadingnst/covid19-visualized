@@ -1,32 +1,25 @@
-import { FunctionComponent } from 'react'
-import Link from 'next/link'
-import { Button, Card, Chart } from 'components'
-import { getPercentage, dateFormat, useFetch, API_BASEURL } from 'utils'
-import { Summary } from 'typings/api'
+import { ReactNode, FunctionComponent } from 'react'
+import { Chart, Card } from 'components'
+import { getPercentage } from 'utils'
+import { DataType as DataChart } from '../Chart'
 
-export default (() => {
-    const { data, loading } = useFetch<Summary>(API_BASEURL)
-    
-    const summary = !data ? {} : {
-        confirmed: data.confirmed.value,
-        recovered: data.recovered.value,
-        deaths: data.deaths.value
-    }
+interface PropTypes {
+    loading: boolean
+    data: DataChart
+    children?: (key: string, value: number, data: DataChart) => ReactNode
+}
 
+export default (props => {
     return (
-        <>
-            <div className="text-center my-12">
-                <h1 className="my-2">Summary</h1>
-                <h6>Last updatated at: {!loading ? dateFormat(data.lastUpdate, true) : 'Loading...'}</h6>
-            </div>
-
-            <div className="divider-line" />
-
-            <div id="summary" className="font is-weight-bold my-24">
-                <div className="summary-data text-shadow text-center color is-theme-txt-dark">
-                    {loading ? <h3>Loading Summary...</h3> : (
-                        Object.entries(summary).map(([key, value], idx) => (
-                            <div key={idx} className="summary-item p-8">
+        <div id="summary" className="font is-weight-bold my-24">
+            <div className="summary-data text-center">
+                {props.loading ? <h3>Loading Summary...</h3> : (
+                    Object.entries(props.data).map(([key, value], idx) => (
+                        <div
+                            key={idx}
+                            className="summary-item text-shadow text-center color is-theme-txt-dark p-8"
+                        >
+                            {props.children ? props.children(key, value, props.data) : (
                                 <Card
                                     header={<h4>TOTAL {key.toUpperCase()}</h4>}
                                     className={`color is-bg-${
@@ -37,33 +30,27 @@ export default (() => {
                                                 : 'danger'}
                                     `}
                                 >
-                                    {`${value} (${key === 'confirmed' ? 'Positive infected' : getPercentage(value, data.confirmed.value)})`}
+                                    {`${value} (${key === 'confirmed'
+                                        ? 'Positive infected'
+                                        : getPercentage(value, props.data.confirmed)
+                                    })`}
                                 </Card>
-                            </div>
-                        ))
-                    )}
-                </div>
-                <div id="chart" className="summary-data">
-                    {data && (
-                        <Chart
-                            confirmed={summary.confirmed}
-                            recovered={summary.recovered}
-                            deaths={summary.deaths}
-                        />
-                    )}
-                </div>
-            </div>
-
-            <div className="btn-link mb-24">
-                <Link href="/details">
-                    <Button block color="primary" text="Go to details page" />
-                </Link>
-
-                <Link href="/indonesia">
-                    <Button className="mt-8" block color="info" text="Go to Indonesia cases" />
-                </Link>
+                            )}
+                        </div>
+                    ))
+                )}
             </div>
             
+            <div id="chart" className="summary-data">
+                {props.loading || (
+                    <Chart
+                        confirmed={props.data.confirmed}
+                        recovered={props.data.recovered}
+                        deaths={props.data.deaths}
+                    />
+                )}
+            </div>
+
             <style jsx>{`
                 #summary {
                     display: flex;
@@ -86,6 +73,6 @@ export default (() => {
                     }
                 }
             `}</style>
-        </>
+        </div>
     )
-}) as FunctionComponent
+}) as FunctionComponent<PropTypes>

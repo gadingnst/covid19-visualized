@@ -7,6 +7,12 @@ const Chart = Dynamic(() => import('react-apexcharts'), {
     loading: () => <h3 className="py-12">Loading Chart...</h3>
 })
 
+export interface DataType {
+    confirmed: number
+    recovered: number
+    deaths: number
+}
+
 interface PropTypes {
     confirmed: number
     recovered: number

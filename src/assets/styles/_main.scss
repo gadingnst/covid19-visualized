@@ -12,6 +12,10 @@
     @extend .py-24
 }
 
+body {
+    background-color: #f3f7f9;
+}
+
 body.dark {
     @extend .color;
     @extend .is-bg-default;

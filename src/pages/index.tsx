@@ -1,16 +1,95 @@
-import { useEffect } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 import { NextPage } from 'next'
-import { Summary, Daily } from 'components'
-import { Country } from 'typings/api'
+import Link from 'next/link'
+
+import {
+    Button,
+    Card,
+    Summary as SummaryComponent,
+    Daily as DailyComponent
+} from 'components'
+
+import {
+    Country,
+    Summary as SummaryType,
+    Daily as DailyType
+} from 'typings/api'
+
 import {
     useFetch,
     visualize,
     legends,
+    dateFormat,
+    getPercentage,
     API_BASEURL
 } from 'utils'
 
+const Summary: FunctionComponent = () => {
+    const { data, loading } = useFetch<SummaryType>(API_BASEURL)
+
+    return (
+        <>
+            <div className="text-center my-12">
+                <h1 className="my-2">Summary</h1>
+                <h6>Last updatated at: {!loading ? dateFormat(data.lastUpdate, true) : 'Loading...'}</h6>
+            </div>
+
+            <div className="divider-line" />
+
+            <SummaryComponent
+                loading={loading}
+                data={{
+                    confirmed: data?.confirmed.value,
+                    recovered: data?.recovered.value,
+                    deaths: data?.deaths.value
+                }}
+            />
+        </>
+    )
+}
+
+const Daily: FunctionComponent = () => {
+    const { data, loading } = useFetch<DailyType[]>(
+        API_BASEURL + 'daily',
+        {},
+        data => data
+            .map((item, idx) => ({
+                ...item,
+                confirmed: idx === 0
+                    ? item.totalConfirmed
+                    : item.totalConfirmed - data[idx - 1].totalConfirmed,
+                recovered: idx === 0
+                    ? item.totalRecovered
+                    : item.totalRecovered - data[idx - 1].totalRecovered
+            }))
+            .sort(({ reportDate: prev }, { reportDate: next }) => next - prev)
+    )
+
+    return (
+        <DailyComponent<DailyType> data={data} loading={loading}>
+            {daily => (
+                <Card
+                    className="text-center"
+                    header={<h5 className="text-center">{dateFormat(daily.reportDateString)}</h5>}
+                    footer={
+                        <div className="total">
+                            <p>Total Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.totalConfirmed || 0}</span></p>
+                            <p>Total Recovered: <span className="font is-weight-bold color is-txt-success">{daily.totalRecovered || 0} ({getPercentage(daily.totalRecovered, daily.totalConfirmed)})</span></p>
+                        </div>
+                    }
+                >
+                    <div className="daily-infected">
+                        <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.confirmed}</span></p>
+                        <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered}</span></p>
+                    </div>
+                </Card>
+            )}
+        </DailyComponent>
+    )
+}
+
 export default (() => {
-    const { data } = useFetch<Country[]>(`${API_BASEURL}/confirmed`)
+    const { data } = useFetch<Country[]>(API_BASEURL + 'confirmed')
 
     useEffect(() => {
         data && visualize('world-visualization', data)
@@ -20,6 +99,15 @@ export default (() => {
         <>
             <Summary />
             
+            <div className="btn-link mb-24">
+                <Link href="/region">
+                    <Button block color="primary" text="See Country and Region Cases" />
+                </Link>
+                <Link href="/indonesia">
+                    <Button className="mt-8" block color="danger" text="See Indonesia Cases" />
+                </Link>
+            </div>
+
             <h2 className="text-center mt-32 mb-12">World Visualization</h2>
             <div className="card world-visualization-container my-8">
                 <div className="tooltip" />

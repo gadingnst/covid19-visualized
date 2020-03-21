@@ -1,14 +1,16 @@
-import { FunctionComponent, useState, useEffect } from 'react'
-import { useFetch, useCounter, dateFormat, getPercentage, API_BASEURL } from 'utils'
-import { Card, FlexList } from 'components'
-import { Daily } from 'typings/api'
+import { ReactNode, useState, useEffect } from 'react'
+import { useCounter  } from 'utils'
+import { FlexList } from 'components'
 
-export default (() => {
-    const [daily, setDaily] = useState<Daily[]>([])
-    const { data } = useFetch<Daily[]>(`${API_BASEURL}/daily`)
+interface PropTypes<TData> {
+    loading: boolean
+    data: TData[]
+    children: (data: TData) => ReactNode
+}
+
+export default <Data extends object>({ data, loading, children }: PropTypes<Data>) => {
+    const [daily, setDaily] = useState<Data[]>([])
     const { counter, eventScroll } = useCounter(data, 6)
-
-    const newest = ({ reportDate: prev }, { reportDate: next }) => next - prev
 
     useEffect(() => {
         data && window.addEventListener('scroll', eventScroll)
@@ -18,43 +20,15 @@ export default (() => {
     }, [data])
 
     useEffect(() => {
-        counter > 0 && setDaily(data
-            .map((dataItem, idx) => ({
-                ...dataItem,
-                confirmed: idx === 0
-                    ? dataItem.totalConfirmed
-                    : dataItem.totalConfirmed - data[idx - 1].totalConfirmed,
-                recovered: idx === 0
-                    ? dataItem.totalRecovered
-                    : dataItem.totalRecovered - data[idx - 1].totalRecovered
-            }))
-            .sort(newest)
-            .slice(0, counter)
-        )
+        counter > 0 && setDaily(data.slice(0, counter))
     }, [counter])
 
     return (
         <div className="my-32">
-            <h2 className="text-center my-12">{data ? 'Daily Update' : 'Loading Daily Update...'}</h2>
-            <FlexList<Daily> data={daily} itemClass="my-8">
-                {daily => (
-                    <Card
-                        className="text-center"
-                        header={<h5 className="text-center">{dateFormat(daily.reportDateString)}</h5>}
-                        footer={
-                            <div className="total">
-                                <p>Total Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.totalConfirmed || 0}</span></p>
-                                <p>Total Recovered: <span className="font is-weight-bold color is-txt-success">{daily.totalRecovered || 0} ({getPercentage(daily.totalRecovered, daily.totalConfirmed)})</span></p>
-                            </div>
-                        }
-                    >
-                        <div className="daily-infected">
-                            <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.confirmed}</span></p>
-                            <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered}</span></p>
-                        </div>
-                    </Card>
-                )}
+            <h2 className="text-center my-12">{loading ? 'Loading Daily Update...' : 'Daily Update'  }</h2>
+            <FlexList<Data> data={daily} itemClass="my-12">
+                {daily => children(daily)}
             </FlexList>
         </div>
     )
-}) as FunctionComponent
+}

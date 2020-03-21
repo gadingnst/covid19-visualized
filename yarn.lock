@@ -4994,6 +4994,13 @@ next@*, next@^9.3.0:
     webpack-hot-middleware "2.25.0"
     webpack-sources "1.4.3"
 
+nextjs-progressbar@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/nextjs-progressbar/-/nextjs-progressbar-0.0.4.tgz#f7580fd517703301dad7eb0893fbed5c9686c840"
+  integrity sha512-t+feT48KBDaysRH+snX3ARmYnAdViHhKSxXIXI4eK97SrVOJN+pHl+/IVUV1Oq1ZM34KEx4TZ7iHl3p7aXrMRA==
+  dependencies:
+    nprogress "^0.2.0"
+
 node-fetch@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
@@ -5134,6 +5141,11 @@ normalize-url@1.9.1:
     console-control-strings "~1.1.0"
     gauge "~2.7.3"
     set-blocking "~2.0.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
+  integrity sha1-y480xTIT2JVyP8urkH6UIq28r7E=
 
 num2fraction@^1.2.2:
   version "1.2.2"
