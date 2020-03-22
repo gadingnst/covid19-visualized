@@ -29,7 +29,19 @@ const tooltipHtml = (data: Country): string => `
     </div>
 `
 
-export default (id: string, data: Country[]): Promise<any> => {
+const mergeSummary = (country: Country) => (
+    (acc: Country, cur: Country): Country => {
+        if (country.iso3 === cur.iso3) {
+            acc.countryRegion = cur.countryRegion
+            acc.confirmed += cur.confirmed
+            acc.recovered += cur.recovered
+            acc.deaths += cur.deaths
+        }
+        return acc
+    }
+)
+
+export default async (id: string, data: Country[]): Promise<any> => {
     const tooltip = D3.select('#tooltip')
     
     const svg = D3.select(`#${id}`)
@@ -44,68 +56,71 @@ export default (id: string, data: Country[]): Promise<any> => {
             .translate([450, 300])
     )
 
-    return Promise.all([D3.json('/dataset/world-110m.json'), D3.csv('/dataset/world-country.csv')])
-        .then(([world, countries]) => {
-            const worldFeatures: Country[] | any[] = ((feature(world, world.objects.countries) as any)
-                .features as any[])
-                .reduce((acc: Country[], cur: Country) => {
-                    const checkCountry = (countries as any[])
-                        .some(country => cur.id === country.id && (
-                            cur.name = country.name,
-                            cur.iso3 = country['alpha-3']
-                        ))
-                    
-                    if (checkCountry) {
-                        const covid19Data: Country | boolean = data.find(country => country.iso3 === cur.iso3) || false
-                        
-                        acc.push(covid19Data
-                            ? {
-                                ...cur,
-                                ...covid19Data,
-                                name: covid19Data.countryRegion,
-                                legend: legends.find(({ value }) => (
-                                    covid19Data.confirmed > (value - 1)
-                                )).color
-                            } : {
-                                ...cur,
-                                confirmed: 0,
-                                recovered: 0,
-                                deaths: 0,
-                                legend: legends.find(({ value }) => value === 0).color
-                            })
-                    }
+    const [world, countries] = await Promise.all([
+        D3.json('/dataset/world-110m.json'),
+        D3.csv('/dataset/world-country.csv')
+    ])
 
-                    return acc
-                }, [] as Country[])
+    const worldFeatures: Country[] | any[] = ((feature(world, world.objects.countries) as any)
+        .features as any[])
+        .reduce((accumulator: Country[], current: Country) => {
+            const checkCountry = (countries as any[])
+                .some(country => current.id === country.id && (
+                    current.name = country.name,
+                    current.iso3 = country['alpha-3']
+                ))
+            
+            if (checkCountry) {
+                const covid19Data = data.reduce(mergeSummary(current), {
+                    countryRegion: '',
+                    confirmed: 0,
+                    recovered: 0,
+                    deaths: 0
+                } as Country)
 
-            svg.selectAll('path')
-                .data(worldFeatures)
-                .enter()
-                .append('path')
+                accumulator.push({
+                    ...current,
+                    confirmed: covid19Data.confirmed,
+                    recovered: covid19Data.recovered,
+                    deaths: covid19Data.deaths,
+                    name: covid19Data.countryRegion || current.name,
+                    legend: legends.find(({ value }) => !!covid19Data.countryRegion
+                        ? covid19Data.confirmed > (value - 1)
+                        : value === 0
+                    ).color
+                })
+            }
+
+            return accumulator
+        }, [])
+    
+    svg.selectAll('path')
+        .data(worldFeatures)
+        .enter()
+        .append('path')
+        .attr('stroke', 'black')
+        .attr('stroke-width', .75)
+        .attr('d', path)
+        .attr('fill', (data: Country) => data.legend)
+        .on('mouseover', function(data: Country) {
+            const color = Color(data.legend).lighten(.35).toString()
+            tooltip.style('hidden', false).html(tooltipHtml(data))
+            D3.select(this)
+                .attr('fill', color)
+                .attr('stroke', 'white')
+                .attr('stroke-width', 2.5)
+        })
+        .on('mousemove', (data: Country) => {
+            tooltip.classed('hidden', false)
+                .style('top', D3.event.pageY + 'px')
+                .style('left', (D3.event.pageX + 10) + 'px')
+                .html(tooltipHtml(data))
+        })
+        .on('mouseout', function(data: Country) {
+            tooltip.classed('hidden', true)
+            D3.select(this)
+                .attr('fill', data.legend)
                 .attr('stroke', 'black')
                 .attr('stroke-width', .75)
-                .attr('d', path)
-                .attr('fill', (data: Country) => data.legend)
-                .on('mouseover', function(data: Country) {
-                    const color = Color(data.legend).lighten(.35).toString()
-                    tooltip.style('hidden', false).html(tooltipHtml(data))
-                    D3.select(this)
-                        .attr('fill', color)
-                        .attr('stroke', 'white')
-                        .attr('stroke-width', 2.5)
-                })
-                .on('mousemove', (data: Country) => {
-                    tooltip.classed('hidden', false)
-                        .style('top', D3.event.pageY + 'px')
-                        .style('left', (D3.event.pageX + 10) + 'px')
-                        .html(tooltipHtml(data))
-                })
-                .on('mouseout', function(data: Country) {
-                    tooltip.classed('hidden', true)
-                    D3.select(this)
-                        .attr('fill', data.legend)
-                        .attr('stroke', 'black')
-                        .attr('stroke-width', .75)
-                })
         })
 }
