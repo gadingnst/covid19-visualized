@@ -114,7 +114,7 @@ export default (() => {
                     <h4 className="my-4 px-8">Legends</h4>
                     {legends.map(({ color, value }) => (
                         <div key={color} className="legends-item font is-size-small">
-                            <div className="legends-detail">{value === 0 ? `No infected` : `${value} or more infected`}</div>
+                            <div className="legends-detail">{value === 0 ? `No case infected` : `${value} or more cases infected`}</div>
                             <div className="legends-color mx-4" style={{ backgroundColor: color }} />
                         </div>
                     ))}
