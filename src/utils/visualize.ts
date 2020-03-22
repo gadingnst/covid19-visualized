@@ -1,6 +1,6 @@
 import * as D3 from 'd3'
-import * as TopoJSON from 'topojson-client'
 import Color from 'color'
+import { feature } from 'topojson-client'
 import { getPercentage, getActiveCase } from 'utils'
 import { Country } from 'typings/api'
 
@@ -46,7 +46,7 @@ export default (id: string, data: Country[]): Promise<any> => {
 
     return Promise.all([D3.json('/dataset/world-110m.json'), D3.csv('/dataset/world-country.csv')])
         .then(([world, countries]) => {
-            const worldFeatures: Country[] | any[] = ((TopoJSON.feature(world, world.objects.countries) as any)
+            const worldFeatures: Country[] | any[] = ((feature(world, world.objects.countries) as any)
                 .features as any[])
                 .reduce((acc: Country[], cur: Country) => {
                     const checkCountry = (countries as any[])
