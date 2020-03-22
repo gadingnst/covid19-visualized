@@ -1,9 +1,8 @@
-const withPlugins = require('next-compose-plugins')
 const withSass = require('@zeit/next-sass')
 const withPWA = require('next-offline')
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 
-module.exports = withPlugins([[withSass], [withPWA]], {
+module.exports = withSass(withPWA({
     dir: './src',
     webpack: (config, opts) => {
         if (config.resolve.plugins) {
@@ -14,4 +13,4 @@ module.exports = withPlugins([[withSass], [withPWA]], {
 
         return config
     }
-})
+}))
