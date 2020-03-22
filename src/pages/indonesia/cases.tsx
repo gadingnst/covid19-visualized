@@ -54,9 +54,9 @@ export default (() => {
                         }</span></p>
                         <p>Status: <span className={`font color is-weight-bold is-txt-${data.status === 'Aktif' ? 'warning' : data.status === 'Sembuh' ? 'success' : data.status === 'Meninggal' ? 'danger' : ''}`}>{data.status || 'Tidak diketahui'}</span></p>
                         <p>Kluster: <span className="font is-weight-bold ">{data.kluster || 'Tidak diketahui'}</span></p>
-                        <p className="mt-8">Positif: <span className="font is-weight-bold">{data.positif ? dateFormat(+data.positif) : 'Tidak diketahui'}</span></p>
-                        <p>Mulai Gejala: <span className="font is-weight-bold">{data.mulaiGejala ? dateFormat(+data.mulaiGejala) : 'Tidak diketahui'}</span></p>
-                        <p>Mulai Di Isolasi: <span className="font is-weight-bold">{data.mulaiDiisolasi ? dateFormat(+data.mulaiDiisolasi) : 'Tidak diketahui'}</span></p>
+                        <p className="mt-8">Positif: <span className="font is-weight-bold">{data.positif ? dateFormat(+data.positif, false, 'id-ID') : 'Tidak diketahui'}</span></p>
+                        <p>Mulai Gejala: <span className="font is-weight-bold">{data.mulaiGejala ? dateFormat(+data.mulaiGejala, false, 'id-ID') : 'Tidak diketahui'}</span></p>
+                        <p>Mulai Di Isolasi: <span className="font is-weight-bold">{data.mulaiDiisolasi ? dateFormat(+data.mulaiDiisolasi, false, 'id-ID') : 'Tidak diketahui'}</span></p>
                     </Card>
                 )}
             </ScrollableList>

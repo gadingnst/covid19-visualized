@@ -63,13 +63,15 @@ const Daily: FunctionComponent = () => {
             {data => (
                 <Card
                     className="text-center"
-                    header={<h5 className="text-center">(Hari ke-#{data.harike}) {dateFormat(data.tanggal)}</h5>}
+                    header={<h5 className="text-center">(Hari ke-#{data.harike}) {dateFormat(data.tanggal, false, 'id-ID')}</h5>}
                     footer={
                         <>
-                            <p>Total Positif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahKasusKumulatif || 0}</span></p>
-                            <p>Total Aktif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahpasiendalamperawatan || 0} ({getPercentage(data.jumlahpasiendalamperawatan, data.jumlahKasusKumulatif)})</span></p>
-                            <p>Total Sembuh: <span className="font is-weight-bold color is-txt-success">{data.jumlahPasienSembuh || 0} ({getPercentage(data.jumlahPasienSembuh, data.jumlahKasusKumulatif)})</span></p>
-                            <p>Total Meninggal: <span className="font is-weight-bold color is-txt-danger">{data.jumlahPasienMeninggal || 0} ({getPercentage(data.jumlahPasienMeninggal, data.jumlahKasusKumulatif)})</span></p>
+                            <h3>Akumulasi</h3>
+                            <div className="divider-line mt-2 mb-4" style={{ width: '30%' }} />
+                            <p>Positif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahKasusKumulatif || 0}</span></p>
+                            <p>Aktif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahpasiendalamperawatan || 0} ({getPercentage(data.jumlahpasiendalamperawatan, data.jumlahKasusKumulatif)})</span></p>
+                            <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{data.jumlahPasienSembuh || 0} ({getPercentage(data.jumlahPasienSembuh, data.jumlahKasusKumulatif)})</span></p>
+                            <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{data.jumlahPasienMeninggal || 0} ({getPercentage(data.jumlahPasienMeninggal, data.jumlahKasusKumulatif)})</span></p>
                         </>
                     }
                 >

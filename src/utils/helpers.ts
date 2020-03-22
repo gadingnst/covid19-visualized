@@ -13,7 +13,7 @@ export const changeBodyTheme = (dark: boolean): void => {
     window.localStorage.setItem('@dark-mode', String(dark))
 }
 
-export const dateFormat = (dateTz: string | number, withTime: boolean = false): string => {
+export const dateFormat = (dateTz: string | number, withTime: boolean = false, locales: string = 'en-ID'): string => {
     let options: any = {
         weekday: 'long',
         day: 'numeric',
@@ -30,7 +30,7 @@ export const dateFormat = (dateTz: string | number, withTime: boolean = false): 
         }
     }
 
-    return new Date(dateTz).toLocaleString('en-ID', options)
+    return new Date(dateTz).toLocaleString(locales, options)
 }
 
 export const onScrollBottom = (callback: () => void) => (): void => {

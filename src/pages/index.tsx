@@ -71,8 +71,10 @@ const Daily: FunctionComponent = () => {
                     header={<h5 className="text-center">{dateFormat(daily.reportDateString)}</h5>}
                     footer={
                         <>
-                            <p>Total Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.totalConfirmed || 0}</span></p>
-                            <p>Total Recovered: <span className="font is-weight-bold color is-txt-success">{daily.totalRecovered || 0} ({getPercentage(daily.totalRecovered, daily.totalConfirmed)})</span></p>
+                            <h3>Total</h3>
+                            <div className="divider-line mt-2 mb-4" style={{ width: '30%' }} />
+                            <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.totalConfirmed || 0}</span></p>
+                            <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.totalRecovered || 0} ({getPercentage(daily.totalRecovered, daily.totalConfirmed)})</span></p>
                         </>
                     }
                 >
