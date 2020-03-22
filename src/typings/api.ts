@@ -32,11 +32,11 @@ export interface IDDaily {
 }
 
 export interface IDProvince {
-    kodeProvinsi: number
+    kodeProvi: number
     provinsi: string
-    kasusTerkonfirmasiAkumulatif: number
-    kasusSembuhAkumulatif: number
-    kasusMeninggalAkumulatif: number
+    kasusPosi: number
+    kasusSemb: number
+    kasusMeni: number
     pembaruan: string
     fid: number
 }

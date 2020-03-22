@@ -7,7 +7,6 @@ import { DataSearch, Button, Region, FlexList } from 'components'
 import {
     useFetch,
     dateFormat,
-    getPercentage,
     getActiveCase,
     metaGenerator,
     API_INDONESIA
@@ -20,15 +19,15 @@ const meta = metaGenerator({
 })
 
 const getActiveIDN = (data: IDProvince) => getActiveCase({
-    confirmed: data.kasusTerkonfirmasiAkumulatif,
-    recovered: data.kasusSembuhAkumulatif,
-    deaths: data.kasusMeninggalAkumulatif
+    confirmed: data.kasusPosi,
+    recovered: data.kasusSemb,
+    deaths: data.kasusMeni
 })
 
 export default (() => {    
     const { data, loading } = useFetch<IDFormat<IDProvince[]>>(API_INDONESIA + 'provinsi')(
         data => {
-            data.data = data.data.filter(({ kodeProvinsi }) => kodeProvinsi)
+            data.data = data.data.filter(({ kodeProvi }) => kodeProvi)
             return data
         }
     )
@@ -64,17 +63,16 @@ export default (() => {
                             {province => (
                                 <Region
                                     chart={{
-                                        confirmed: province.kasusTerkonfirmasiAkumulatif,
-                                        recovered: province.kasusSembuhAkumulatif,
-                                        deaths: province.kasusMeninggalAkumulatif
+                                        confirmed: province.kasusPosi,
+                                        recovered: province.kasusSemb,
+                                        deaths: province.kasusMeni
                                     }}
-                                    header={`(#${province.kodeProvinsi}) ${province.provinsi}`}
-                                    footer={`Last updated at: ${dateFormat(province.pembaruan)}`}
+                                    header={`(#${province.kodeProvi}) ${province.provinsi}`}
                                 >
-                                    <p>Total Positif: <span className="font is-weight-bold color is-txt-warning">{province.kasusTerkonfirmasiAkumulatif}</span></p>
-                                    <p>Aktif: <span className="font is-weight-bold color is-txt-warning">{getActiveIDN(province)} ({getPercentage(getActiveIDN(province), province.kasusTerkonfirmasiAkumulatif)})</span></p>
-                                    <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{province.kasusSembuhAkumulatif} ({getPercentage(province.kasusSembuhAkumulatif, province.kasusTerkonfirmasiAkumulatif)})</span></p>
-                                    <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{province.kasusMeninggalAkumulatif} ({getPercentage(province.kasusMeninggalAkumulatif, province.kasusTerkonfirmasiAkumulatif)})</span></p>
+                                    <p>Total Positif: <span className="font is-weight-bold color is-txt-warning">{province.kasusPosi}</span></p>
+                                    <p className="mt-8">Aktif: <span className="font is-weight-bold color is-txt-warning">{getActiveIDN(province)}</span></p>
+                                    <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{province.kasusSemb}</span></p>
+                                    <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{province.kasusMeni}</span></p>
                                 </Region>
                             )}
                         </FlexList>

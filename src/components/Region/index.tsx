@@ -6,7 +6,7 @@ interface PropTypes {
     chart: DataChart
     children: ReactNode
     header: ReactNode | string
-    footer: ReactNode | string
+    footer?: ReactNode | string
 }
 
 export default (props => {
@@ -16,11 +16,11 @@ export default (props => {
     return (
         <Card
             header={<h2 className="text-center">{header}</h2>}
-            footer={
+            footer={!footer ? null : (
                 <p className="font is-size-small text-center mt-12">
                     {footer}
                 </p>
-            }
+            )}
         >
             <div className="region-content">
                 {isShowChart && (

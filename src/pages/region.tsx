@@ -7,7 +7,6 @@ import { Country } from 'typings/api'
 import {
     useFetch,
     dateFormat,
-    getPercentage,
     getActiveCase,
     metaGenerator,
     API_BASEURL
@@ -73,9 +72,9 @@ export default (() => {
                                     footer={`Last updated at: ${dateFormat(country.lastUpdate, true)}`}
                                 >
                                     <p>Total Confirmed: <span className="font is-weight-bold color is-txt-warning">{country.confirmed}</span></p>
-                                    <p>Active: <span className="font is-weight-bold color is-txt-warning">{getActiveCase(country)} ({getPercentage(getActiveCase(country), country.confirmed)})</span></p>
-                                    <p>Recovered: <span className="font is-weight-bold color is-txt-success">{country.recovered} ({getPercentage(country.recovered, country.confirmed)})</span></p>
-                                    <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{country.deaths} ({getPercentage(country.deaths, country.confirmed)})</span></p>
+                                    <p className="mt-8">Active: <span className="font is-weight-bold color is-txt-warning">{getActiveCase(country)}</span></p>
+                                    <p>Recovered: <span className="font is-weight-bold color is-txt-success">{country.recovered}</span></p>
+                                    <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{country.deaths}</span></p>
                                 </Region>
                             )}
                         </FlexList>
