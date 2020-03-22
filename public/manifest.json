@@ -1,5 +1,11 @@
 {
     "name": "COVID-19 Visualized",
+    "short_name": "COVID-19 Visualized",
+    "description": "COVID-19 World Update with data Visualization. (Include Indonesia cases)",
+    "start_url": "/?standalone=true",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#11CDEF",
     "icons": [
         {
             "src": "\/favicon\/android-icon-36x36.png",

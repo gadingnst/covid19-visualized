@@ -18,7 +18,7 @@ export default (() => {
         <>
             <Head>
                 <title>Indonesia Case Details | COVID-19 Visualized</title>
-                {meta.map((props, idx) => <meta key={idx} {...props} />)}
+                {meta}
             </Head>
 
             <div className="text-center my-12">

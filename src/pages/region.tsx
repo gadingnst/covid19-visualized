@@ -2,8 +2,22 @@ import Head from 'next/head'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { DataSearch, Button, Region, FlexList } from 'components'
-import { useFetch, dateFormat, getPercentage, getActiveCase, API_BASEURL } from 'utils'
 import { Country } from 'typings/api'
+
+import {
+    useFetch,
+    dateFormat,
+    getPercentage,
+    getActiveCase,
+    metaGenerator,
+    API_BASEURL
+} from 'utils'
+
+const meta = metaGenerator({
+    title: 'Country and Region | COVID-19 Visualized',
+    description: 'COVID-19 cases in world country and region',
+    keywords: 'covid19, corona virus, website, china, covid19 world, covid-19, corona, corona region, corona spread'
+})
 
 export default (() => {    
     const countries = useFetch<Country[]>(API_BASEURL + 'confirmed')(
@@ -16,6 +30,7 @@ export default (() => {
         <>
             <Head>
                 <title>Country and Region | COVID-19 Visualized</title>
+                {meta}
             </Head>
 
             <div className="text-center my-12">

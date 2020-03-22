@@ -22,7 +22,7 @@ import {
 const meta = metaGenerator({
     title: 'Indonesia Update | COVID-19 Visualized',
     description: 'COVID-19 daily update for Indonesia region',
-    keywords: 'covid19, corona virus, website, china, covid19 world, covid-19, corona, indonesia, kasus indonesia'
+    keywords: 'covid19, corona virus, website, china, covid19 world, covid-19, corona, indonesia, kasus indonesia, corona viral'
 })
 
 const Summary: FunctionComponent = () => {
@@ -86,7 +86,7 @@ export default (() => (
     <>
         <Head>
             <title>Indonesia Daily Update | COVID-19 Visualized</title>
-            {meta.map((props, idx) => <meta key={idx} {...props} />)}
+            {meta}
         </Head>
 
         <div className="text-center my-12">

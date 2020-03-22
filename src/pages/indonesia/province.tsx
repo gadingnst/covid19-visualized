@@ -1,9 +1,23 @@
 import Head from 'next/head'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { DataSearch, Button, Region, FlexList } from 'components'
-import { useFetch, dateFormat, getPercentage, getActiveCase, API_INDONESIA } from 'utils'
 import { IDFormat, IDProvince } from 'typings/api'
+import { DataSearch, Button, Region, FlexList } from 'components'
+
+import {
+    useFetch,
+    dateFormat,
+    getPercentage,
+    getActiveCase,
+    metaGenerator,
+    API_INDONESIA
+} from 'utils'
+
+const meta = metaGenerator({
+    title: 'Indonesia Case Details | COVID-19 Visualized',
+    description: 'COVID-19 cases in Indonesia region',
+    keywords: 'covid19, corona viral, corona virus, website, china, covid19 world, covid-19, corona, indonesia, kasus indonesia'
+})
 
 const getActiveIDN = (data: IDProvince) => getActiveCase({
     confirmed: data.kasusTerkonfirmasiAkumulatif,
@@ -23,6 +37,7 @@ export default (() => {
         <>
             <Head>
                 <title>Indonesia Province | COVID-19 Visualized</title>
+                {meta}
             </Head>
 
             <div className="text-center my-12">
