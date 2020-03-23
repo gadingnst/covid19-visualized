@@ -1,6 +1,4 @@
-import * as D3 from 'd3'
-import Color from 'color'
-import { feature } from 'topojson-client'
+import { select, event, geoPath, geoNaturalEarth1 } from 'd3'
 import { getPercentage, getActiveCase } from 'utils'
 import { Country } from 'typings/api'
 
@@ -31,71 +29,56 @@ const tooltipHtml = (data: Country): string => `
 
 const mergeSummary = (country: Country) => (
     (acc: Country, cur: Country): Country => {
-        if (country.iso3 === cur.iso3) {
-            acc.countryRegion = cur.countryRegion
-            acc.confirmed += cur.confirmed
-            acc.recovered += cur.recovered
+        country.iso3 === cur.iso3 && (
+            acc.countryRegion = cur.countryRegion,
+            acc.confirmed += cur.confirmed,
+            acc.recovered += cur.recovered,
             acc.deaths += cur.deaths
-        }
+        )
         return acc
     }
 )
 
 export default async (id: string, data: Country[]): Promise<any> => {
-    const tooltip = D3.select('#tooltip')
+    const tooltip = select('#tooltip')
     
-    const svg = D3.select(`#${id}`)
+    const svg = select(`#${id}`)
         .append('svg')
         .attr('width', 960)
         .attr('height', 520)
     
-    const path = D3.geoPath().projection(
-        (D3.geoNaturalEarth1() 
+    const path = geoPath().projection(
+        (geoNaturalEarth1() 
             .rotate([-9, 0]) as any)
             .scale([1300 / (2 * Math.PI)])
             .translate([450, 300])
     )
 
-    const [world, countries] = await Promise.all([
-        D3.json('/dataset/world-110m.json'),
-        D3.csv('/dataset/world-country.csv')
-    ])
+    const worlds = (await window.fetch('/world-countries-110m.json')
+        .then(response => response.json()) as Country[])
+        .map(country => {
+            const covid19Data = data.reduce(mergeSummary(country), {
+                countryRegion: '',
+                confirmed: 0,
+                recovered: 0,
+                deaths: 0
+            } as Country)
 
-    const worldFeatures: Country[] | any[] = ((feature(world, world.objects.countries) as any)
-        .features as any[])
-        .reduce((accumulator: Country[], current: Country) => {
-            const checkCountry = (countries as any[])
-                .some(country => current.id === country.id && (
-                    current.name = country.name,
-                    current.iso3 = country['alpha-3']
-                ))
-            
-            if (checkCountry) {
-                const covid19Data = data.reduce(mergeSummary(current), {
-                    countryRegion: '',
-                    confirmed: 0,
-                    recovered: 0,
-                    deaths: 0
-                } as Country)
-
-                accumulator.push({
-                    ...current,
-                    confirmed: covid19Data.confirmed,
-                    recovered: covid19Data.recovered,
-                    deaths: covid19Data.deaths,
-                    name: covid19Data.countryRegion || current.name,
-                    legend: legends.find(({ value }) => !!covid19Data.countryRegion
-                        ? covid19Data.confirmed > (value - 1)
-                        : value === 0
-                    ).color
-                })
+            return {
+                ...country,
+                confirmed: covid19Data.confirmed,
+                recovered: covid19Data.recovered,
+                deaths: covid19Data.deaths,
+                name: covid19Data.countryRegion || country.name,
+                legend: legends.find(({ value }) => !!covid19Data.countryRegion
+                    ? covid19Data.confirmed > (value - 1)
+                    : value === 0
+                ).color
             }
-
-            return accumulator
-        }, [])
+        }) as any[]
     
     svg.selectAll('path')
-        .data(worldFeatures)
+        .data(worlds)
         .enter()
         .append('path')
         .attr('stroke', 'black')
@@ -103,22 +86,21 @@ export default async (id: string, data: Country[]): Promise<any> => {
         .attr('d', path)
         .attr('fill', (data: Country) => data.legend)
         .on('mouseover', function(data: Country) {
-            const color = Color(data.legend).lighten(.35).toString()
             tooltip.style('hidden', false).html(tooltipHtml(data))
-            D3.select(this)
-                .attr('fill', color)
+            select(this)
+                .attr('fill', '#ddd')
                 .attr('stroke', 'white')
                 .attr('stroke-width', 2.5)
         })
         .on('mousemove', (data: Country) => {
             tooltip.classed('hidden', false)
-                .style('top', D3.event.pageY + 'px')
-                .style('left', (D3.event.pageX + 10) + 'px')
+                .style('top', event.pageY + 'px')
+                .style('left', (event.pageX + 10) + 'px')
                 .html(tooltipHtml(data))
         })
         .on('mouseout', function(data: Country) {
             tooltip.classed('hidden', true)
-            D3.select(this)
+            select(this)
                 .attr('fill', data.legend)
                 .attr('stroke', 'black')
                 .attr('stroke-width', .75)
