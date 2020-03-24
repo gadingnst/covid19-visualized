@@ -15,6 +15,7 @@ import {
     useFetch,
     dateFormat,
     getPercentage,
+    getPerDayStats,
     metaGenerator,
     API_INDONESIA
 } from 'utils'
@@ -44,14 +45,14 @@ const Daily: FunctionComponent = () => {
     const { data, loading } = useFetch<IDFormat<IDDaily[]>>(API_INDONESIA + 'harian')(
         data => {
             data.data = data.data
-                .map((item, idx) => ({
+                .map((item, index) => ({
                     ...item,
-                    jumlahPasienSembuhPerHari: idx === 0
-                        ? item.jumlahPasienSembuh
-                        : item.jumlahPasienSembuh - data.data[idx - 1].jumlahPasienSembuh,
-                    jumlahPasienMeninggalPerHari: idx === 0
-                        ? item.jumlahPasienMeninggal
-                        : item.jumlahPasienMeninggal - data.data[idx - 1].jumlahPasienMeninggal,
+                    jumlahPasienSembuhPerHari: getPerDayStats({
+                        index, data: data.data, stats: 'jumlahPasienSembuh'
+                    }),
+                    jumlahPasienMeninggalPerHari: getPerDayStats({
+                        index, data: data.data, stats: 'jumlahPasienMeninggal'
+                    })
                 }))
                 .sort(({ tanggal: prev }, { tanggal: next }) => next - prev)
             return data

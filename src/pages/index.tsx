@@ -21,6 +21,7 @@ import {
     legends,
     dateFormat,
     getPercentage,
+    getPerDayStats,
     API_BASEURL
 } from 'utils'
 
@@ -51,16 +52,15 @@ const Summary: FunctionComponent = () => {
 const Daily: FunctionComponent = () => {
     const { data, loading } = useFetch<DailyType[]>(API_BASEURL + 'daily')(
         data => data
-            .map((item, idx) => ({
-                ...item,
-                confirmed: idx === 0
-                    ? item.totalConfirmed
-                    : item.totalConfirmed - data[idx - 1].totalConfirmed,
-                recovered: idx === 0
-                    ? item.totalRecovered
-                    : item.totalRecovered - data[idx - 1].totalRecovered
-            }))
-            .sort(({ reportDate: prev }, { reportDate: next }) => next - prev)
+            .map((item, index) => {
+                item.confirmed.perDay = getPerDayStats({ data, index, stats: 'confirmed' })
+                item.recovered.perDay = getPerDayStats({ data, index, stats: 'recovered' })
+                item.deaths.perDay = getPerDayStats({ data, index, stats: 'deaths' })
+                return item
+            })
+            .sort(({ reportDate: prev }, { reportDate: next }) => (
+                new Date(next).getTime() - new Date(prev).getTime()
+            ))
     )
 
     return (
@@ -68,18 +68,20 @@ const Daily: FunctionComponent = () => {
             {daily => (
                 <Card
                     className="text-center"
-                    header={<h5 className="text-center">{dateFormat(daily.reportDateString)}</h5>}
+                    header={<h5 className="text-center">{dateFormat(daily.reportDate)}</h5>}
                     footer={
                         <>
                             <h3>Total</h3>
                             <div className="divider-line mt-2 mb-4" style={{ width: '30%' }} />
-                            <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.totalConfirmed || 0}</span></p>
-                            <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.totalRecovered || 0} ({getPercentage(daily.totalRecovered, daily.totalConfirmed)})</span></p>
+                            <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.confirmed.total}</span></p>
+                            <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered.total} ({getPercentage(daily.recovered.total, daily.confirmed.total)})</span></p>
+                            <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{daily.deaths.total} ({getPercentage(daily.deaths.total, daily.confirmed.total)})</span></p>
                         </>
                     }
                 >
-                    <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.confirmed}</span></p>
-                    <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered}</span></p>
+                    <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.confirmed.perDay}</span></p>
+                    <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered.perDay}</span></p>
+                    <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{daily.deaths.perDay}</span></p>
                 </Card>
             )}
         </ScrollableList>

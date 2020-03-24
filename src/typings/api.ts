@@ -3,6 +3,13 @@ type SummaryObjectType = {
     detail: string
 }
 
+type DailyStats = {
+    total: number
+    china: number
+    outsideChina: number
+    perDay?: number
+}
+
 export interface IDFormat<TData = any> {
     data: TData
     warning?: string
@@ -80,17 +87,20 @@ export interface Country {
 }
 
 export interface Daily {
-    reportDate: number | null
-    mainlandChina: number | null
-    otherLocations: number | null
-    totalConfirmed: number | null
-    totalRecovered: number | null
-    reportDateString: string | null
-    deltaConfirmed: number  | null
-    deltaRecovered: number | null
-    objectid: number
-    confirmed?: number
-    recovered?: number
+    totalConfirmed: number
+    mainlandChina: number
+    otherLocations: number
+    deltaConfirmed: number
+    totalRecovered: number
+    confirmed: DailyStats
+    deltaConfirmedDetail: DailyStats
+    deaths: DailyStats
+    recovered: DailyStats
+    active: number
+    deltaRecovered: number
+    incidentRate: number
+    peopleTested: number
+    reportDate: string
 }
 
 export interface Summary {

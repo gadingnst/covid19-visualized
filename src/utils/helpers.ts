@@ -1,5 +1,15 @@
 import { DataType as Summary } from 'components/Chart'
 
+type PerDayParams<TData> = {
+    data: TData[]
+    stats: string
+    index: number
+}
+
+export const getPerDayStats = <T extends object>({ data, stats, index }: PerDayParams<T>): number => index === 0
+    ? data[index][stats].total
+    : data[index][stats].total - data[index - 1][stats].total
+
 export const getPercentage = (amount: number, total: number): string => (
     ((amount * 100) / (total || 1)).toFixed(2) + '%'
 )
