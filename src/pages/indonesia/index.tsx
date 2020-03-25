@@ -45,15 +45,18 @@ const Daily: FunctionComponent = () => {
     const { data, loading } = useFetch<IDFormat<IDDaily[]>>(API_INDONESIA + 'harian')(
         data => {
             data.data = data.data
-                .map((item, index) => ({
-                    ...item,
-                    jumlahPasienSembuhPerHari: getPerDayStats({
-                        index, data: data.data, stats: 'jumlahPasienSembuh'
-                    }),
-                    jumlahPasienMeninggalPerHari: getPerDayStats({
-                        index, data: data.data, stats: 'jumlahPasienMeninggal'
+                .reduce((acc, cur, index) =>{
+                    cur.jumlahKasusKumulatif && acc.push({
+                        ...cur,
+                        jumlahPasienSembuhPerHari: getPerDayStats({
+                            index, data: data.data, stats: 'jumlahPasienSembuh'
+                        }),
+                        jumlahPasienMeninggalPerHari: getPerDayStats({
+                            index, data: data.data, stats: 'jumlahPasienMeninggal'
+                        })
                     })
-                }))
+                    return acc
+                }, [] as IDDaily[])
                 .sort(({ tanggal: prev }, { tanggal: next }) => next - prev)
             return data
         }
