@@ -74,13 +74,13 @@ const Daily: FunctionComponent = () => {
                             <h3>Total</h3>
                             <div className="divider-line mt-2 mb-4" style={{ width: '30%' }} />
                             <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.confirmed.total}</span></p>
-                            <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered.total} ({getPercentage(daily.recovered.total, daily.confirmed.total)})</span></p>
+                            {/* <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered.total} ({getPercentage(daily.recovered.total, daily.confirmed.total)})</span></p> */}
                             <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{daily.deaths.total} ({getPercentage(daily.deaths.total, daily.confirmed.total)})</span></p>
                         </>
                     }
                 >
                     <p>Confirmed: <span className="font is-weight-bold color is-txt-warning">{daily.confirmed.perDay}</span></p>
-                    <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered.perDay}</span></p>
+                    {/* <p>Recovered: <span className="font is-weight-bold color is-txt-success">{daily.recovered.perDay}</span></p> */}
                     <p>Deaths: <span className="font is-weight-bold color is-txt-danger">{daily.deaths.perDay}</span></p>
                 </Card>
             )}
