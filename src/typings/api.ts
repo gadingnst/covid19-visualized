@@ -26,6 +26,8 @@ export interface IDDaily {
     harike: number
     tanggal: number
     jumlahKasusBaruperHari: number | null
+    jumlahKasusSembuhperHari: number | null
+    jumlahKasusMeninggalperHari: number | null
     jumlahKasusKumulatif: number | null
     jumlahpasiendalamperawatan: number | null
     persentasePasiendalamPerawatan: number | null
@@ -34,8 +36,6 @@ export interface IDDaily {
     jumlahPasienMeninggal: number | null
     persentasePasienMeninggal: number | null
     fid: number
-    jumlahPasienSembuhPerHari?: number
-    jumlahPasienMeninggalPerHari?: number
 }
 
 export interface IDProvince {

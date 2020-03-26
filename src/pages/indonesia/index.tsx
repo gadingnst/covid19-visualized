@@ -45,18 +45,7 @@ const Daily: FunctionComponent = () => {
     const { data, loading } = useFetch<IDFormat<IDDaily[]>>(API_INDONESIA + 'harian')(
         data => {
             data.data = data.data
-                .reduce((acc, cur, index) =>{
-                    cur.jumlahKasusKumulatif && acc.push({
-                        ...cur,
-                        jumlahPasienSembuhPerHari: getPerDayStats({
-                            index, data: data.data, stats: 'jumlahPasienSembuh'
-                        }),
-                        jumlahPasienMeninggalPerHari: getPerDayStats({
-                            index, data: data.data, stats: 'jumlahPasienMeninggal'
-                        })
-                    })
-                    return acc
-                }, [] as IDDaily[])
+                .filter(({ jumlahKasusKumulatif }) => jumlahKasusKumulatif)
                 .sort(({ tanggal: prev }, { tanggal: next }) => next - prev)
             return data
         }
@@ -72,16 +61,16 @@ const Daily: FunctionComponent = () => {
                         <>
                             <h3>Akumulasi</h3>
                             <div className="divider-line mt-2 mb-4" style={{ width: '30%' }} />
-                            <p>Positif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahKasusKumulatif || 0}</span></p>
-                            <p>Aktif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahpasiendalamperawatan || 0} ({getPercentage(data.jumlahpasiendalamperawatan, data.jumlahKasusKumulatif)})</span></p>
-                            <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{data.jumlahPasienSembuh || 0} ({getPercentage(data.jumlahPasienSembuh, data.jumlahKasusKumulatif)})</span></p>
-                            <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{data.jumlahPasienMeninggal || 0} ({getPercentage(data.jumlahPasienMeninggal, data.jumlahKasusKumulatif)})</span></p>
+                            <p>Positif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahKasusKumulatif}</span></p>
+                            <p>Aktif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahpasiendalamperawatan} ({getPercentage(data.jumlahpasiendalamperawatan, data.jumlahKasusKumulatif)})</span></p>
+                            <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{data.jumlahPasienSembuh} ({getPercentage(data.jumlahPasienSembuh, data.jumlahKasusKumulatif)})</span></p>
+                            <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{data.jumlahPasienMeninggal} ({getPercentage(data.jumlahPasienMeninggal, data.jumlahKasusKumulatif)})</span></p>
                         </>
                     }
                 >
-                    <p>Positif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahKasusBaruperHari || 0}</span></p>
-                    <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{data.jumlahPasienSembuhPerHari || 0}</span></p>
-                    <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{data.jumlahPasienMeninggalPerHari || 0}</span></p>
+                    <p>Positif: <span className="font is-weight-bold color is-txt-warning">{data.jumlahKasusBaruperHari}</span></p>
+                    <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{data.jumlahKasusSembuhperHari}</span></p>
+                    <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{data.jumlahKasusMeninggalperHari}</span></p>
                 </Card>
             )}
         </ScrollableList>
