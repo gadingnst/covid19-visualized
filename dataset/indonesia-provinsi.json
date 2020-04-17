@@ -1,0 +1,137 @@
+[{
+    "id": "Aceh",
+    "kode": 11,
+    "provinsi": "Aceh"
+}, {
+    "id": "Bali",
+    "kode": 51,
+    "provinsi": "Bali"
+}, {
+    "id": "Bangka-Belitung",
+    "kode": 19,
+    "provinsi": "Kepulauan Bangka Belitung"
+}, {
+    "id": "Banten",
+    "kode": 36,
+    "provinsi": "Banten"
+}, {
+    "id": "Bengkulu",
+    "kode": 17,
+    "provinsi": "Bengkulu"
+}, {
+    "id": "Gorontalo",
+    "kode": 75,
+    "provinsi": "Gorontalo"
+}, {
+    "id": "Irian Jaya Barat",
+    "kode": 91,
+    "provinsi": "Papua Barat"
+}, {
+    "id": "Jakarta Raya",
+    "kode": 31,
+    "provinsi": "Jakarta"
+}, {
+    "id": "Jambi",
+    "kode": 15,
+    "provinsi": "Jambi"
+}, {
+    "id": "Jawa Barat",
+    "kode": 32,
+    "provinsi": "Jawa Barat"
+}, {
+    "id": "Jawa Tengah",
+    "kode": 33,
+    "provinsi": "Jawa Tengah"
+}, {
+    "id": "Jawa Timur",
+    "kode": 35,
+    "provinsi": "Jawa Timur"
+}, {
+    "id": "Kalimantan Barat",
+    "kode": 6,
+    "provinsi": "Kalimantan Barat"
+}, {
+    "id": "Kalimantan Selatan",
+    "kode": 63,
+    "provinsi": "Kalimantan Selatan"
+}, {
+    "id": "Kalimantan Tengah",
+    "kode": 62,
+    "provinsi": "Kalimantan Tengah"
+}, {
+    "id": "Kalimantan Timur",
+    "kode": 64,
+    "provinsi": "Kalimantan Timur"
+}, {
+    "id": "Kalimantan Utara",
+    "kode": 65,
+    "provinsi": "Kalimantan Utara"
+}, {
+    "id": "Kepulauan Riau",
+    "kode": 21,
+    "provinsi": "Kepulauan Riau"
+}, {
+    "id": "Lampung",
+    "kode": 18,
+    "provinsi": "Lampung"
+}, {
+    "id": "Maluku Utara",
+    "kode": 82,
+    "provinsi": "Maluku Utara"
+}, {
+    "id": "Maluku",
+    "kode": 81,
+    "provinsi": "Maluku"
+}, {
+    "id": "Nusa Tenggara Barat",
+    "kode": 52,
+    "provinsi": "Nusa Tenggara Barat"
+}, {
+    "id": "Nusa Tenggara Timur",
+    "kode": 53,
+    "provinsi": "Nusa Tenggara Timur"
+}, {
+    "id": "Papua",
+    "kode": 94,
+    "provinsi": "Papua"
+}, {
+    "id": "Riau",
+    "kode": 14,
+    "provinsi": "Riau"
+}, {
+    "id": "Sulawesi Barat",
+    "kode": 76,
+    "provinsi": "Sulawesi Barat"
+}, {
+    "id": "Sulawesi Selatan",
+    "kode": 73,
+    "provinsi": "Sulawesi Selatan"
+}, {
+    "id": "Sulawesi Tengah",
+    "kode": 72,
+    "provinsi": "Sulawesi Tengah"
+}, {
+    "id": "Sulawesi Tenggara",
+    "kode": 74,
+    "provinsi": "Sulawesi Tenggara"
+}, {
+    "id": "Sulawesi Utara",
+    "kode": 71,
+    "provinsi": "Sulawesi Utara"
+}, {
+    "id": "Sumatera Barat",
+    "kode": 13,
+    "provinsi": "Sumatera Barat"
+}, {
+    "id": "Sumatera Selatan",
+    "kode": 16,
+    "provinsi": "Sumatera Selatan"
+}, {
+    "id": "Sumatera Utara",
+    "kode": 12,
+    "provinsi": "Sumatera Utara"
+}, {
+    "id": "Yogyakarta",
+    "kode": 34,
+    "provinsi": "Yogyakarta"
+}]

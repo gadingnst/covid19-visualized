@@ -4,3 +4,4 @@ node_modules
 next-env.d.ts
 yarn-error.log
 public/world-countries-110m.json
+public/indonesia-provinces.json

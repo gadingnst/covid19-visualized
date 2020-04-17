@@ -2,6 +2,38 @@ const { readFile, writeFile } = require('fs').promises
 const { feature } = require('topojson-client')
 const parseCSV = require('neat-csv')
 
+async function generateIndonesiaProvinces() {
+    const datasets = [
+        './dataset/indonesia-provinsi.json',
+        './dataset/indonesia-topo-no-code.json'
+    ]
+    const [indonesiaProvinces, oldTopoData] = await Promise.all(datasets.map(path =>
+        readFile(path).then(JSON.parse)
+    ))
+
+    const { provinces } = oldTopoData.objects
+    const geometries = provinces.geometries.reduce((accumulator, current) => {
+        const province = indonesiaProvinces.find(({ provinsi }) => provinsi === current.properties.provinsi)
+        province && accumulator.push({
+            ...current,
+            properties: {
+                ...current.properties,
+                kode: province.kode
+            }
+        })
+        return accumulator
+    }, [])
+
+    const data = {
+        ...oldTopoData,
+        objects: {
+            provinces: { ...provinces, geometries }
+        }
+    }
+
+    writeFile('public/indonesia-provinces.json', JSON.stringify(data))
+}
+
 async function generateCountryData() {
     const [world, countries] = await Promise.all([
         readFile('dataset/world-110m.json', 'utf-8').then(JSON.parse),
@@ -27,4 +59,5 @@ async function generateCountryData() {
     writeFile('public/world-countries-110m.json', JSON.stringify(data))
 }
 
+generateIndonesiaProvinces()
 generateCountryData()
