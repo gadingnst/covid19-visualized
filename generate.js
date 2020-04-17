@@ -7,6 +7,7 @@ async function generateIndonesiaProvinces() {
         './dataset/indonesia-provinsi.json',
         './dataset/indonesia-topo-no-code.json'
     ]
+    
     const [indonesiaProvinces, oldTopoData] = await Promise.all(datasets.map(path =>
         readFile(path).then(JSON.parse)
     ))
