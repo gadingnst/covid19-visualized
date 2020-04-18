@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { DataSearch, Button, Region, FlexList } from 'components'
+import { DataSearch, Button, Region, FlexList, PageLayout } from 'components'
 import { Country } from 'typings/api'
 
 import {
@@ -18,7 +18,7 @@ const meta = metaGenerator({
     keywords: 'covid19, corona virus, website, china, covid19 world, covid-19, corona, corona region, corona spread'
 })
 
-export default (() => {    
+const Page: NextPage = () => {    
     const countries = useFetch<Country[]>(API_BASEURL + 'confirmed')(
         data => (
             data.sort(({ countryRegion: prev }, { countryRegion: next }) => (next > prev) ? -1 : 1)
@@ -89,4 +89,6 @@ export default (() => {
             </DataSearch>
         </>
     )
-}) as NextPage
+}
+
+export default PageLayout(Page)

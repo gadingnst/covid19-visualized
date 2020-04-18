@@ -1,7 +1,7 @@
 import App from 'next/app'
 import Head from 'next/head'
 import NextNprogress from 'nextjs-progressbar'
-import { Layout } from 'components'
+import { AppLayout } from 'components'
 import { metaGenerator } from 'utils'
 import 'assets/styles/_bundle.scss'
 
@@ -15,7 +15,7 @@ export default class extends App {
     public render() {
         const { Component, pageProps } = this.props
         return (
-            <Layout>
+            <AppLayout>
                 <Head>
                     <title>COVID-19 Visualized</title>
                     {this.meta}
@@ -42,7 +42,7 @@ export default class extends App {
                 <div className="main-layout">
                     <Component  {...pageProps} />
                 </div>
-            </Layout>
+            </AppLayout>
         )
     }   
 }

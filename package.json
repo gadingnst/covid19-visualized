@@ -20,7 +20,8 @@
     "nextjs-progressbar": "^0.0.4",
     "react": "^16.13.0",
     "react-apexcharts": "^1.3.6",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-ga": "^2.7.0"
   },
   "devDependencies": {
     "@types/d3": "^5.7.2",

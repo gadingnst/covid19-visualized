@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { Button, Card, ScrollableList } from 'components'
+import { Button, Card, ScrollableList, PageLayout } from 'components'
 import { IDFormat, IDCases } from 'typings/api'
 import { useFetch, dateFormat, metaGenerator, API_INDONESIA } from 'utils'
 
@@ -11,7 +11,7 @@ const meta = metaGenerator({
     keywords: 'covid19, corona virus, website, china, covid19 world, covid-19, corona, indonesia, kasus indonesia'
 })
 
-export default (() => {
+const Page: NextPage = () => {
     const { data, loading } = useFetch<IDFormat<IDCases[]>>(API_INDONESIA + 'kasus/old')()
 
     return (
@@ -62,4 +62,6 @@ export default (() => {
             </ScrollableList>
         </>
     )
-}) as NextPage
+}
+
+export default PageLayout(Page)

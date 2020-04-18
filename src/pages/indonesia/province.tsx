@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { IDFormat, IDProvince } from 'typings/api'
-import { DataSearch, Button, Region, FlexList } from 'components'
+import { DataSearch, Button, Region, FlexList, PageLayout } from 'components'
 
 import {
     useFetch,
@@ -17,7 +17,7 @@ const meta = metaGenerator({
     keywords: 'covid19, corona viral, corona virus, website, china, covid19 world, covid-19, corona, indonesia, kasus indonesia'
 })
 
-export default (() => {    
+const Page: NextPage = () => {    
     const { data, loading } = useFetch<IDFormat<IDProvince[]>>(API_INDONESIA + 'provinsi')(
         data => {
             data.data = data.data.filter(({ kodeProvi }) => kodeProvi)
@@ -80,4 +80,6 @@ export default (() => {
             </DataSearch>
         </>
     )
-}) as NextPage
+}
+
+export default PageLayout(Page)

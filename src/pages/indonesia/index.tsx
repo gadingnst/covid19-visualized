@@ -9,7 +9,8 @@ import {
     Button,
     ScrollableList,
     Visualization,
-    Summary as SummaryComponent
+    Summary as SummaryComponent,
+    PageLayout
 } from 'components'
 
 import {
@@ -79,7 +80,7 @@ const Daily: FunctionComponent = () => {
     )
 }
 
-export default (() => {
+const Page: NextPage = () => {
     const { data } = useFetch<IDFormat<IDProvince[]>>(API_INDONESIA + 'provinsi')(
         data => {
             data.data = data.data.filter(({ kodeProvi }) => kodeProvi)
@@ -130,4 +131,6 @@ export default (() => {
             <Daily />
         </>
     )
-}) as NextPage
+}
+
+export default PageLayout(Page)

@@ -7,6 +7,7 @@ import {
     Card,
     ScrollableList,
     Visualization,
+    PageLayout,
     Summary as SummaryComponent
 } from 'components'
 
@@ -89,7 +90,7 @@ const Daily: FunctionComponent = () => {
     )
 }
 
-export default (() => {
+const Page: NextPage = () => {
     const { data } = useFetch<Country[]>(API_BASEURL + 'confirmed')()
 
     return (
@@ -121,4 +122,6 @@ export default (() => {
             <Daily />
         </>
     )
-}) as NextPage
+}
+
+export default PageLayout(Page)
