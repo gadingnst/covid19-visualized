@@ -18,8 +18,9 @@
 - [x] Chart
 
 ### Data Source
-- [TopoJSON for Geo World Map JSON](https://github.com/topojson/topojson)
+- [World Atlas JSON](https://github.com/topojson/world-atlas)
 - [COVID-19 API (made by mathdroid)](https://github.com/mathdroid/covid-19-api)
+- [Indonesia Atlas JSON](https://github.com/ghapsara/indonesia-atlas)
 - [Indonesia COVID-19 API (made by mathdroid)](https://github.com/mathdroid/indonesia-covid-19-api)
 
 ### LICENSE
