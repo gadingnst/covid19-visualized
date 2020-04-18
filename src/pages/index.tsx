@@ -19,7 +19,7 @@ import {
 import {
     useFetch,
     visualize,
-    legends,
+    worldLegends,
     dateFormat,
     getPercentage,
     getPerDayStats,
@@ -109,8 +109,8 @@ export default (() => {
             <Visualization
                 id="world-visualization"
                 data={data}
-                visualize={visualize}
-                legends={legends.map(({ color, value }) => (
+                visualize={visualize.world}
+                legends={worldLegends.map(({ color, value }) => (
                     <div key={color} className="legends-item font is-size-small">
                         <div className="legends-detail">{value === 0 ? `No case infected` : `${value} or more cases infected`}</div>
                         <div className="legends-color mx-4" style={{ backgroundColor: color }} />

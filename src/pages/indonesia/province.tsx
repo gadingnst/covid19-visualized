@@ -6,8 +6,7 @@ import { DataSearch, Button, Region, FlexList } from 'components'
 
 import {
     useFetch,
-    dateFormat,
-    getActiveCase,
+    getActiveCaseID,
     metaGenerator,
     API_INDONESIA
 } from 'utils'
@@ -16,12 +15,6 @@ const meta = metaGenerator({
     title: 'Indonesia Case Details | COVID-19 Visualized',
     description: 'COVID-19 cases in Indonesia region',
     keywords: 'covid19, corona viral, corona virus, website, china, covid19 world, covid-19, corona, indonesia, kasus indonesia'
-})
-
-const getActiveIDN = (data: IDProvince) => getActiveCase({
-    confirmed: data.kasusPosi,
-    recovered: data.kasusSemb,
-    deaths: data.kasusMeni
 })
 
 export default (() => {    
@@ -70,7 +63,7 @@ export default (() => {
                                     header={`(#${province.kodeProvi}) ${province.provinsi}`}
                                 >
                                     <p>Total Positif: <span className="font is-weight-bold color is-txt-warning">{province.kasusPosi}</span></p>
-                                    <p className="mt-8">Aktif: <span className="font is-weight-bold color is-txt-warning">{getActiveIDN(province)}</span></p>
+                                    <p className="mt-8">Aktif: <span className="font is-weight-bold color is-txt-warning">{getActiveCaseID(province)}</span></p>
                                     <p>Sembuh: <span className="font is-weight-bold color is-txt-success">{province.kasusSemb}</span></p>
                                     <p>Meninggal: <span className="font is-weight-bold color is-txt-danger">{province.kasusMeni}</span></p>
                                 </Region>

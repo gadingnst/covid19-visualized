@@ -8,29 +8,27 @@ async function generateIndonesiaProvinces() {
         './dataset/indonesia-topo-no-code.json'
     ]
     
-    const [indonesiaProvinces, oldTopoData] = await Promise.all(datasets.map(path =>
+    const [indonesiaProvinces, oldTopoData] = await Promise.all(datasets.map(path => (
         readFile(path).then(JSON.parse)
-    ))
+    )))
 
-    const { provinces } = oldTopoData.objects
-    const geometries = provinces.geometries.reduce((accumulator, current) => {
-        const province = indonesiaProvinces.find(({ provinsi }) => provinsi === current.properties.provinsi)
-        province && accumulator.push({
-            ...current,
-            properties: {
-                ...current.properties,
-                kode: province.kode
+    const data = feature(oldTopoData, oldTopoData.objects.provinces)
+        .features
+        .reduce((accumulator, current) => {
+            const province = indonesiaProvinces.find(({ provinsi }) => provinsi === current.properties.provinsi)
+            
+            if (province) {
+                const properties = { ...current.properties }
+                delete current.properties
+                accumulator.push({
+                    ...current,
+                    ...properties,
+                    kodeProvi: province.kode
+                })
             }
-        })
-        return accumulator
-    }, [])
-
-    const data = {
-        ...oldTopoData,
-        objects: {
-            provinces: { ...provinces, geometries }
-        }
-    }
+            
+            return accumulator
+        }, [])
 
     writeFile('public/indonesia-provinces.json', JSON.stringify(data))
 }
@@ -44,7 +42,7 @@ async function generateCountryData() {
     const data = feature(world, world.objects.countries)
         .features
         .reduce((accumulator, current) => {
-            countries.some(country => current.id === country.id && (
+            const assignedCountry = countries.some(country => current.id === country.id && (
                 current.name = country.name,
                 current.iso2 = country['alpha-2'],
                 current.iso3 = country['alpha-3'],
@@ -52,11 +50,16 @@ async function generateCountryData() {
                 current.regionCode = country['region-code'],
                 current.subRegion = country['sub-region'],
                 current.subRegionCode = country['sub-region-code']
-            )) && accumulator.push(current)
+            ))
+            
+            if (assignedCountry) {
+                delete current.properties
+                accumulator.push(current)
+            }
 
             return accumulator
         }, [])
-    
+
     writeFile('public/world-countries-110m.json', JSON.stringify(data))
 }
 

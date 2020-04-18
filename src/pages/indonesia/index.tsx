@@ -2,12 +2,13 @@ import { FunctionComponent } from 'react'
 import Head from 'next/head'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { IDFormat, IDDaily, IDSummary } from 'typings/api'
+import { IDFormat, IDDaily, IDSummary, IDProvince } from 'typings/api'
 
 import {
     Card,
     Button,
     ScrollableList,
+    Visualization,
     Summary as SummaryComponent
 } from 'components'
 
@@ -15,9 +16,10 @@ import {
     useFetch,
     dateFormat,
     getPercentage,
-    getPerDayStats,
     metaGenerator,
-    API_INDONESIA
+    API_INDONESIA,
+    visualize,
+    indonesiaLegends
 } from 'utils'
 
 const meta = metaGenerator({
@@ -77,33 +79,55 @@ const Daily: FunctionComponent = () => {
     )
 }
 
-export default (() => (
-    <>
-        <Head>
-            <title>Indonesia Daily Update | COVID-19 Visualized</title>
-            {meta}
-        </Head>
+export default (() => {
+    const { data } = useFetch<IDFormat<IDProvince[]>>(API_INDONESIA + 'provinsi')(
+        data => {
+            data.data = data.data.filter(({ kodeProvi }) => kodeProvi)
+            return data
+        }
+    )
 
-        <div className="text-center my-12">
-            <h1 className="my-2">Indonesia Update</h1>
-        </div>
+    return (
+        <>
+            <Head>
+                <title>Indonesia Daily Update | COVID-19 Visualized</title>
+                {meta}
+            </Head>
 
-        <div className="divider-line" />
+            <div className="text-center my-12">
+                <h1 className="my-2">Indonesia Update</h1>
+            </div>
 
-        <Summary />
+            <div className="divider-line" />
 
-        <div className="btn-link my-24">
-            <Link href="/indonesia/province">
-                <Button className="my-4" block color="primary" text="See Province Cases" />
-            </Link>
-            <Link href="/indonesia/cases">
-                <Button className="my-4" block color="success" text="See Case details" />
-            </Link>
-            <Link href="/">
-                <Button className="my-4" block color="secondary" text="< Back to Home" />
-            </Link>
-        </div>
+            <Summary />
 
-        <Daily />
-    </>
-)) as NextPage
+            <div className="btn-link my-24">
+                <Link href="/indonesia/province">
+                    <Button className="my-4" block color="primary" text="See Province Cases" />
+                </Link>
+                <Link href="/indonesia/cases">
+                    <Button className="my-4" block color="success" text="See Case details" />
+                </Link>
+                <Link href="/">
+                    <Button className="my-4" block color="secondary" text="< Back to Home" />
+                </Link>
+            </div>
+
+            <h2 className="text-center mt-32 mb-12">Indonesia Visualization</h2>
+            <Visualization
+                id="indonesia-visualization"
+                data={data?.data}
+                visualize={visualize.indonesia}
+                legends={indonesiaLegends.map(({ color, value }) => (
+                    <div key={color} className="legends-item font is-size-small">
+                        <div className="legends-detail">{value === 0 ? `Tidak ada kasus positif` : `${value} atau lebih kasus positif`}</div>
+                        <div className="legends-color mx-4" style={{ backgroundColor: color }} />
+                    </div>
+                ))}
+            />
+
+            <Daily />
+        </>
+    )
+}) as NextPage

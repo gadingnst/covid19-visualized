@@ -4,7 +4,7 @@ div.visualization-container {
     border-radius: 5px;
     overflow: hidden;
     
-    #world-visualization {
+    .visualization {
         width: auto;
         overflow-y: hidden;
         overflow-x: auto;
@@ -44,7 +44,7 @@ div.visualization-container {
         }
     }
     
-    #tooltip {
+    .tooltip {
         color: #222; 
         background: #fff; 
         border-radius: 5px;

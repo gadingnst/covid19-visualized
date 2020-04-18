@@ -1,4 +1,5 @@
 import { DataType as Summary } from 'components/Chart'
+import { IDProvince } from 'typings/api'
 
 type PerDayParams<TData> = {
     data: TData[]
@@ -17,6 +18,12 @@ export const getPercentage = (amount: number, total: number): string => (
 export const getActiveCase = (data: Summary): number => (
     data.confirmed - (data.recovered + data.deaths)
 )
+
+export const getActiveCaseID = (data: IDProvince) => getActiveCase({
+    confirmed: data.kasusPosi,
+    recovered: data.kasusSemb,
+    deaths: data.kasusMeni
+})
 
 export const changeBodyTheme = (dark: boolean): void => {
     document.body.setAttribute('class', dark ? 'dark' : 'light')

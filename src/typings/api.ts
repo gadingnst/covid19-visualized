@@ -46,6 +46,7 @@ export interface IDProvince {
     kasusMeni: number
     pembaruan: string
     fid: number
+    legend?: string
 }
 
 export interface IDCases {

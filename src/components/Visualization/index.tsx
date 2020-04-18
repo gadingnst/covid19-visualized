@@ -18,9 +18,9 @@ export default (({ id, legends, data, visualize }) => {
 
     return (
         <div className="card visualization-container my-8">
-            <div id="tooltip" />
-            <div id={id} />
+            <div className="tooltip" />
             {loading && <h2 className="color is-theme-txt-dark m-8 text-center">Loading Atlas...</h2>}
+            <div id={id} className="visualization" />
             <div className="legends color is-theme-txt-dark px-12 my-12">
                 <h4 className="my-4 px-8">Legends</h4>
                 {legends}
