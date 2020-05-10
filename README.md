@@ -26,11 +26,12 @@
 ### LICENSE
 MIT
 
-### Support
+## Support Me
+### Global
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B71P7PB)
-
-- [Trakteer (Indonesia)](https://trakteer.id/sutanlab)
-- [Karyakarsa (Indonesia)](https://karyakarsa.com/sutanlab)
+### Indonesia
+- [Trakteer](https://trakteer.id/sutanlab)
+- [Karyakarsa](https://karyakarsa.com/sutanlab)
 
 ---
 
