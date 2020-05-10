@@ -27,7 +27,8 @@
 MIT
 
 ### Support
-- [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B71P7PB)
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B71P7PB)
+
 - [Trakteer (Indonesia)](https://trakteer.id/sutanlab)
 - [Karyakarsa (Indonesia)](https://karyakarsa.com/sutanlab)
 
