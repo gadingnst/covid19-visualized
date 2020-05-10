@@ -26,6 +26,9 @@
 ### LICENSE
 MIT
 
+### Support
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B71P7PB)
+
 ---
 
 Copyright © 2020 by Sutan Gading Fadhillah Nasution
