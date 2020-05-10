@@ -40,6 +40,11 @@ export default class extends App {
                 <NextNprogress color="#0292ff" height={2} />
                 
                 <div className="main-layout">
+                    <div className="mx-2 text-right">
+                        <a href="https://ko-fi.com/B0B71P7PB" target="_blank">
+                            <img style={{ border: 0, height: 36 }} src="https://cdn.ko-fi.com/cdn/kofi3.png?v=2" alt="Buy Me a Coffee at ko-fi.com" />
+                        </a>
+                    </div>
                     <Component  {...pageProps} />
                 </div>
             </AppLayout>
