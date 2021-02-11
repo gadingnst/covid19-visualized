@@ -14,7 +14,7 @@
     "generate": "node generate.js; next build; next export"
   },
   "dependencies": {
-    "apexcharts": "^3.16.1",
+    "apexcharts": "^3.24.0",
     "d3": "^5.15.0",
     "next": "^9.3.2",
     "nextjs-progressbar": "^0.0.4",
