@@ -33,7 +33,7 @@
     "@zeit/next-typescript": "^1.1.1",
     "neat-csv": "^5.2.0",
     "next-offline": "^5.0.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "styled-jsx-plugin-sass": "^1.0.0",
     "topojson-client": "^3.1.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
