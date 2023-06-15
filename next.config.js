@@ -10,7 +10,6 @@ module.exports = withPWA(withSass({
         } else {
             config.resolve.plugins = [new TsconfigPathsWebpackPlugin()]
         }
-
         return config
     }
 }))
